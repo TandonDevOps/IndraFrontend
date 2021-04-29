@@ -2,6 +2,7 @@
 NATIVE_DIR = IndraReactNative
 WEB_DIR = IndraReactWeb
 COMMON_DIR = IndraReactCommon
+HEROKU_APP_NAME = indra-frontend  # set your own app name here!
 
 native:
 	cd $(NATIVE_DIR); make prod
@@ -33,3 +34,13 @@ dev_env_web:
 	# linux system might need sudo before command
 	npm -v git
 	cd $(WEB_DIR) && npm install
+
+heroku_create:
+	# create our app's connection to heroku
+	heroku login
+	heroku git:remote -a $(HEROKU_APP_NAME)
+
+heroku:
+	# right now we have a problem because package.json is not
+	# in the top level dir
+	git push heroku main
