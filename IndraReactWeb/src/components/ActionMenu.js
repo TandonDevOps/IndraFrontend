@@ -93,7 +93,7 @@ class ActionMenu extends Component {
   async componentWillUnmount() {
     // clear the registry in the backend.
     const { EXEC_KEY } = this.state;
-    await axios.get(
+    await axios.delete(
       `${CLEAR_REGISTRY_URL}${EXEC_KEY}`,
     );
     // not doing anything with the response.
