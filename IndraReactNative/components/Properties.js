@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Form, StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { Input } from 'react-native-elements'
+import { Input, Header, Icon, Button } from 'react-native-elements'
 import axios from 'axios'
 import config from '../../IndraReactCommon/config'
 import ModelInputfield from './ModelInputfield.js'
@@ -37,7 +37,10 @@ class Properties extends Component {
         } catch(e) {
             console.log(e);
         }*/
+        console.log("hi");
     }
+
+
 
     updateJson(key, param){
         let properties = this.state.modelDetails
@@ -107,9 +110,40 @@ class Properties extends Component {
 
         return (
             <View>
-            <ScrollView contentInset={{top:10,bottom:50}} style={styles.scrollConainer}>
-                {t}
-            </ScrollView>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content" // or directly
+                    leftComponent={<Button
+                                        icon={
+                                            <Icon
+                                                name="arrow-left"
+                                                size={25}
+                                                color='#1e90ff'
+                                            />
+                                        }
+                                        title="Menu"
+                                        onPress={() => this.props.navigation.goBack()}
+                                        buttonStyle={styles.goBackButton}
+                                        titleStyle={{color: '#1e90ff', fontSize: '18'}}
+                                    />}
+                        centerComponent={<Text style= {{ 
+                                                    color: 'black', 
+                                                    fontSize: 17, 
+                                                    //fontWeight: "bold", 
+                                                    marginTop: 'auto', 
+                                                    marginBottom: 14 
+                                                }}>
+                                                {this.state.modelName}
+                                        </Text> }
+                        containerStyle={{
+                        backgroundColor: 'white',
+                        justifyContent: 'space-around',
+                        height: width*0.2
+                    }}
+                />
+                <ScrollView contentInset={{top:10,bottom:50}} style={styles.scrollConainer}>
+                    {t}
+                </ScrollView>
             </View>
         );
     }
@@ -146,6 +180,12 @@ class Properties extends Component {
     },
     scrollConainer: {
         height: height * 0.8,
+    },
+    goBackButton: {
+        width: width*0.18,
+        height: height*0.05,
+        backgroundColor: 'transparent',
+        marginLeft: 'auto'
     }
  })
 //onChangeText={(param) => this.updateJson(key, param)}
