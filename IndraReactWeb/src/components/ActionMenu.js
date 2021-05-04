@@ -5,24 +5,15 @@ import autoBind from 'react-autobind';
 import PropTypes from 'prop-types';
 import PageLoader from './PageLoader';
 import PopulationGraph from './PopulationGraph';
-import PopulationBarGraph from './PopulationBarGraph';
 import ScatterPlot from './ScatterPlot';
-import Debugger from './Debugger';
 import ModelStatusBox from './ModelStatusBox';
-import SourceCodeViewer from './SourceCodeViewer';
 import RunModelButton from './RunModelButton';
 import './styles.css';
 import config from 'IndraReactCommon/config';
-import LogsViewer from './LogsViewer';
 
 
 const POP = 2;
 const SCATTER = 3;
-const BAR = 4;
-// const DATA = 4;
-const DEBUG = 5;
-const SOURCE = 6;
-const LOG = 7;
 const MENU_URL = config.MENU_URL;
 const CLEAR_REGISTRY_URL = config.CLEAR_REGISTRY_URL;
 const USER_MSGS_URL = config.USER_MSGS_URL;
@@ -41,12 +32,8 @@ class ActionMenu extends Component {
       periodNum: 10,
       errorMessage: '',
       disabledButton: false,
-      loadingSourceCode: false,
-      loadingDebugger: false,
       loadingPopulation: false,
       loadingScatter: false,
-      loadingBar: false,
-      loadingLogs: false,
       activeDisplay: null,
       continuousRun: true,
       continuousRunDisabled: false,
@@ -176,18 +163,6 @@ class ActionMenu extends Component {
       case SCATTER:
         this.setState({ loadingScatter: true });
         break;
-      case DEBUG:
-        this.setState({ loadingDebugger: true });
-        break;
-      case SOURCE:
-        this.setState({ loadingSourceCode: true });
-        break;
-      case LOG:
-        this.setState({ loadingLogs: true });
-        break;
-      case BAR:
-        this.setState({ loadingBar: true });
-        break;
       default:
         break;
     }
@@ -256,7 +231,7 @@ class ActionMenu extends Component {
     return <h1 className="header">{name}</h1>;
   };
 
-  MenuItem = (i, action, text, key) => {
+  MenuItem = (i, action, text) => {
     /**
      * All models will have all the menu items appear on the page.
      * However, we keep one of the graphs (Population graph or Scatter plot)
@@ -274,7 +249,7 @@ class ActionMenu extends Component {
           (action === SCATTER && defaultGraph === 'line')
           || (action === POP && defaultGraph === 'scatter')
         }
-        key={key}
+        key={i}
         onClick={() => this.handleClick(action)}
       >
         {text}
@@ -285,23 +260,14 @@ class ActionMenu extends Component {
   renderMenuItem = () => {
     const {
       envFile,
-      loadingDebugger,
-      loadingSourceCode,
-      sourceCode,
       loadingPopulation,
       loadingScatter,
-      loadingLogs,
-      loadingBar,
       EXEC_KEY
     } = this.state;
     return (
       <div className="mt-5">
-        <Debugger loadingData={loadingDebugger} envFile={envFile} />
-        <SourceCodeViewer loadingData={loadingSourceCode} code={sourceCode} />
         <PopulationGraph loadingData={loadingPopulation} EXEC_KEY={EXEC_KEY} />
-        <PopulationBarGraph loadingData={loadingBar} envFile={envFile} />
         <ScatterPlot loadingData={loadingScatter} envFile={envFile} />
-        <LogsViewer loadingData={loadingLogs} envFile={envFile} />
       </div>
     );
   };
@@ -317,8 +283,7 @@ class ActionMenu extends Component {
               ? this.MenuItem(
                 i,
                 parseInt(id),
-                menu[id].question,
-                menu[id].url,
+                menu[id].question
               )
               : null))}
           </ListGroup>
