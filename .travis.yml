@@ -1,5 +1,10 @@
 os: osx
 language: node_js
+env:
+  global:
+    - NATIVE_DIR = IndraReactNative
+    - WEB_DIR = IndraReactWeb
+
 node_js:
   - node
   - lts/*
@@ -13,8 +18,9 @@ before_script:
   - npm install --save jest
   - npm install -g expo-cli
 script:
-  - npm ci
-  - npx jest --ci
+  - cd $NATIVE_DIR && npm ci
+  - cd $NATIVE_DIR && npx jest --ci
+  - cd $WEB_DIR && make tests
 jobs:
   include:
     - stage: deploy
