@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
-import { Button, ButtonGroup, Input } from 'react-native-elements';
+import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Button, ButtonGroup, Icon, Input, Header } from 'react-native-elements';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
-import config from '../../IndraReactCommon/config'
 import { ScrollView } from 'react-native-gesture-handler';
+import config from '../../IndraReactCommon/config'
 
 
 var width = Dimensions.get('window').width;
@@ -91,6 +92,8 @@ class ModelView extends Component {
           });
     }
 
+    
+
 
     render(){
         //console.log("find model name:", this.state.modelParams);
@@ -104,7 +107,47 @@ class ModelView extends Component {
 
         return(
             <View>
-
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content" // or directly
+                    leftComponent={<Button
+                                        icon={
+                                            <Icon
+                                                name="arrow-left"
+                                                size={25}
+                                                color='#1e90ff'
+                                            />
+                                        }
+                                        title="Properties"
+                                        onPress={() => this.props.navigation.goBack()}
+                                        buttonStyle={styles.goBackButton}
+                                        titleStyle={{color: '#1e90ff', fontSize: '18'}}
+                                    />}
+                    centerComponent={<Text style= {{ 
+                                                color: 'black', 
+                                                fontSize: 17, 
+                                                //fontWeight: "bold", 
+                                                marginTop: 'auto', 
+                                                marginBottom: 14 
+                                            }}>
+                                            {this.state.modelName}
+                                    </Text> }
+                    rightComponent={<View style={styles.container}>
+                                        <FontAwesome.Button
+                                        onPress={() => alert("hello")}
+                                        name="bars"
+                                        color="#24A0ED"
+                                        backgroundColor="transparent"
+                                        marginLeft={10}
+                                        />
+                                    </View>
+                                    }
+                    containerStyle={{
+                    backgroundColor: 'white',
+                    justifyContent: 'space-around',
+                    height: width*0.2
+                }}
+                />
                 
                 <Text style={styles.modelStatus}>Model Status:</Text>
 
@@ -114,9 +157,8 @@ class ModelView extends Component {
                     </ScrollView>
                 </View>
 
-                <View>
+                
 
-                </View>
                 <View style={styles.rowRun}>
                     <Button
                         title="run"
@@ -177,6 +219,7 @@ const styles = StyleSheet.create ({
         marginTop: height*0.5,
     },
     modelStatus: {
+        marginTop: height*0.01,
         marginLeft: width*0.03,
     },
     modelStatusContainer: {
@@ -187,6 +230,13 @@ const styles = StyleSheet.create ({
         height:height/3.5, 
         margin:width*0.02
     },
+    goBackButton: {
+        width: width*0.26,
+        height: height*0.05,
+        backgroundColor: 'transparent',
+        marginBottom: 0,
+        
+    }
 
 
 })

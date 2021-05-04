@@ -34,21 +34,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
-        <Stack.Screen name="Properties" component={Properties} />
-        <Stack.Screen name="ModelView" component={ModelView} options={({ route }) => ({ title: route.params.modelName }), {
-          
-          headerRight: () => (
-            <View style={styles.container}>
-              <FontAwesome.Button
-                onPress={() => alert('This is a button!')}
-                name="bars"
-                color="#24A0ED"
-                backgroundColor="transparent"
-                marginLeft={10}
-              />
-            </View>
-          ),
-        }}/>
+        <Stack.Screen name="Properties" component={Properties} options={{ headerShown: false }}/>
+        <Stack.Screen name="ModelView" component={ModelView} options={{ headerShown: false }}/>
         
       </Stack.Navigator>
     </NavigationContainer>
