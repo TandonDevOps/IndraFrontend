@@ -2,25 +2,10 @@ os: osx
 language: node_js
 node_js:
   - node
-  - lts/*
 cache:
-  directories:
-    - ~/.npm
-    - .jest
+  npm: false
 before_script:
-  - npm install -g npm@latest
+  - cd ./IndraReactWeb
   - npm install
-  - npm install --save jest
-  - npm install -g expo-cli
 script:
-  - npm ci
-  - npx jest --ci
-jobs:
-  include:
-    - stage: deploy
-      node_js: lts/*
-      script:
-        - npm ci
-        - npx expo login -u "indrareactnative" -p "qawsedrf12345"
-        - cd IndraReactNative
-        - npx expo publish --non-interactive
+  - make tests
