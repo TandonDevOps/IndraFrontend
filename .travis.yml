@@ -1,10 +1,5 @@
 os: osx
 language: node_js
-env:
-  global:
-    - NATIVE_DIR = IndraReactNative
-    - WEB_DIR = IndraReactWeb
-
 node_js:
   - node
 cache:
@@ -13,15 +8,4 @@ before_script:
   - cd ./IndraReactWeb
   - npm install
 script:
-  - cd $NATIVE_DIR && npm ci
-  - cd $NATIVE_DIR && npx jest --ci
-  - cd $WEB_DIR && make tests
-jobs:
-  include:
-    - stage: deploy
-      node_js: lts/*
-      script:
-        - npm ci
-        - npx expo login -u "indrareactnative" -p "qawsedrf12345"
-        - cd IndraReactNative
-        - npx expo publish --non-interactive
+  - make tests
