@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, Form, StyleSheet, ScrollView, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { Input, Header, Icon, Button } from 'react-native-elements'
 import axios from 'axios'
 import config from '../../IndraReactCommon/config'
-import ModelInputfield from './ModelInputfield.js'
-import { ButtonUseModel, ButtonSubmitOptions } from './button.js'
+import { ButtonSubmitOptions } from './button.js'
 import { Logs } from 'expo'
 
 //Logs.enableExpoCliLogging() //enable the logs in expo cli
