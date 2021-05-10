@@ -8,6 +8,7 @@ import ModelDetail from './components/ModelDetail';
 import ActionMenu from './components/ActionMenu';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorCatching from './components/ErrorCatching';
+import DebugMenu from './components/DebugMenu';
 
 // The styling below should be in a style sheet, not in javascript:
 const Wrapper = styled('div')`
@@ -39,6 +40,7 @@ export function IndraRoutes() {
       <Route exact path="/wip" component={WIP} />
       <Route exact path="/models/props/:id" component={ModelDetail} />
       <Route exact path="/models/menu/:id" component={ActionMenu} />
+      <Route exact path="/models/debug/:exec_key" component={DebugMenu} />
       <Route exact path="/errorCatching" component={ErrorCatching} />
       <Route component={NotFoundPage} />
     </Switch>
