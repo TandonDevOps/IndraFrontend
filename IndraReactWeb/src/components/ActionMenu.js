@@ -231,15 +231,15 @@ class ActionMenu extends Component {
     return <h1 className="header">{name}</h1>;
   };
 
-  MenuItem = (i, action, text) => {
+  MenuItem = (id, action, text) => {
     /**
      * All models will have all the menu items appear on the page.
      * However, we keep one of the graphs (Population graph or Scatter plot)
      * disabled based on "graph" field from models.json
      */
-    const { graph } = this.state;
+    const { graph, EXEC_KEY, activeDisplay} = this.state;
     const defaultGraph = graph;
-    const { activeDisplay } = this.state;
+    const { history } = this.props;
     return (
       <ListGroup.Item
         className="w-50 p-3 list-group-item list-group-item-action"
@@ -249,8 +249,14 @@ class ActionMenu extends Component {
           (action === SCATTER && defaultGraph === 'line')
           || (action === POP && defaultGraph === 'scatter')
         }
-        key={i}
-        onClick={() => this.handleClick(action)}
+        key={id}
+        onClick={() => {
+          this.handleClick(action);
+          console.log(id);
+          if (id === '4') {
+            history.push(`/models/debug/${EXEC_KEY.toString(10)}`);
+          }
+        }}
       >
         {text}
       </ListGroup.Item>
@@ -278,10 +284,10 @@ class ActionMenu extends Component {
       <div className="row margin-bottom-80">
         <div className="col w-25">
           <ListGroup>
-            {Object.keys(menu).map((id, i) => (
+            {Object.keys(menu).map((id) => (
             parseInt(id) > 1
               ? this.MenuItem(
-                i,
+                id,
                 parseInt(id),
                 menu[id].question
               )
