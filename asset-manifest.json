@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/IndraFrontend/static/css/main.83acbbd9.chunk.css",
-    "main.js": "/IndraFrontend/static/js/main.d3862802.chunk.js",
-    "main.js.map": "/IndraFrontend/static/js/main.d3862802.chunk.js.map",
+    "main.js": "/IndraFrontend/static/js/main.e11bfb79.chunk.js",
+    "main.js.map": "/IndraFrontend/static/js/main.e11bfb79.chunk.js.map",
     "runtime-main.js": "/IndraFrontend/static/js/runtime-main.19e0b32e.js",
     "runtime-main.js.map": "/IndraFrontend/static/js/runtime-main.19e0b32e.js.map",
     "static/css/2.1d56c5fb.chunk.css": "/IndraFrontend/static/css/2.1d56c5fb.chunk.css",
-    "static/js/2.6808fefa.chunk.js": "/IndraFrontend/static/js/2.6808fefa.chunk.js",
-    "static/js/2.6808fefa.chunk.js.map": "/IndraFrontend/static/js/2.6808fefa.chunk.js.map",
+    "static/js/2.b04b7358.chunk.js": "/IndraFrontend/static/js/2.b04b7358.chunk.js",
+    "static/js/2.b04b7358.chunk.js.map": "/IndraFrontend/static/js/2.b04b7358.chunk.js.map",
     "index.html": "/IndraFrontend/index.html",
-    "precache-manifest.602e29c50ed43fca48619145ef17304c.js": "/IndraFrontend/precache-manifest.602e29c50ed43fca48619145ef17304c.js",
+    "precache-manifest.cb56f65f4639702b7d80dc3a3be3bd11.js": "/IndraFrontend/precache-manifest.cb56f65f4639702b7d80dc3a3be3bd11.js",
     "service-worker.js": "/IndraFrontend/service-worker.js",
     "static/css/2.1d56c5fb.chunk.css.map": "/IndraFrontend/static/css/2.1d56c5fb.chunk.css.map",
     "static/css/main.83acbbd9.chunk.css.map": "/IndraFrontend/static/css/main.83acbbd9.chunk.css.map",
-    "static/js/2.6808fefa.chunk.js.LICENSE.txt": "/IndraFrontend/static/js/2.6808fefa.chunk.js.LICENSE.txt",
+    "static/js/2.b04b7358.chunk.js.LICENSE.txt": "/IndraFrontend/static/js/2.b04b7358.chunk.js.LICENSE.txt",
     "static/media/Sandpile.jpg": "/IndraFrontend/static/media/Sandpile.090bc1a0.jpg",
     "static/media/mendelobrot_sq.jpg": "/IndraFrontend/static/media/mendelobrot_sq.875dd8b8.jpg",
     "static/media/sandpile_2.png": "/IndraFrontend/static/media/sandpile_2.d38b3fb1.png",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.19e0b32e.js",
     "static/css/2.1d56c5fb.chunk.css",
-    "static/js/2.6808fefa.chunk.js",
+    "static/js/2.b04b7358.chunk.js",
     "static/css/main.83acbbd9.chunk.css",
-    "static/js/main.d3862802.chunk.js"
+    "static/js/main.e11bfb79.chunk.js"
   ]
 }
