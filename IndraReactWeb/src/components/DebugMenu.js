@@ -4,6 +4,7 @@ import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import PropTypes from 'prop-types';
 
 class DebugMenu extends Component {
 
@@ -25,6 +26,7 @@ class DebugMenu extends Component {
         menu: menu.data
       })
     } catch (e) {
+      console.log(e);
     }
   }
 
@@ -64,7 +66,7 @@ class DebugMenu extends Component {
       <div className="row margin-bottom-80">
         <div className="col w-25">
           <ListGroup>
-            {Object.keys(menu).map((id, i) => (
+            {Object.keys(menu).map((id) => (
               this.MenuItem(
               menu[id].question,
               menu[id].url,
@@ -93,5 +95,17 @@ class DebugMenu extends Component {
     );
   }
 }
+
+DebugMenu.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
+};
+
+DebugMenu.defaultProps = {
+  location: {
+    pathname: '',
+  },
+};
 
 export default DebugMenu;
