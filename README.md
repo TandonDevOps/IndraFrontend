@@ -1,15 +1,23 @@
 # IndraFrontend
+[![GitHub deployments](https://img.shields.io/github/deployments/TandonDevOps/IndraFrontend/github-pages?label=github-pages&style=flat-square)](https://github.com/TandonDevOps/IndraFrontend/deployments/activity_log?environment=github-pages)
+
 IndraFrontend has both web and mobile version of Indra agent-based modeling system. It utilizes the existing API of Indra to deliver a front-end to mobile users. 
 
+The web is hosted on the Github Page: https://tandondevops.github.io/IndraFrontend/
+
 ## Tools
-* Framework: React Native
+* Framework: React Native, React
 * Documentation: Jsdoc
-* Continuous Integration: Github Actions
+* Continuous Integration: Github Actions, Travis
 
 
 ## Setup
-* To install the required environment for mobile app: make dev_env_native
+### Native
+* To install the required environment for mobile app: `make dev_env_native`
 * To local host the mobile app: `cd IndraReactNative && make start` or `cd IndraReactNative && expo start`
+### Web
+* To install the required environment for web: `make dev_env_web`
+* To local host the web: `make web_start`
 
 ## There are three main directories under the project root:
 
