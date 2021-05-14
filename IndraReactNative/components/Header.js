@@ -48,8 +48,6 @@ function PageHeader(props) {
                 backgroundColor: 'white',
                 //justifyContent: 'space-around',
                 height: width*0.22,
-                borderBottomColor: 'green',
-                borderBottomEndRadius: 2,
                 display: 'flex',
             }}
         />
