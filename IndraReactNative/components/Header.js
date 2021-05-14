@@ -7,7 +7,7 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 function PageHeader(props) {
-    const { navigation, modelName } = props;
+    const { navigation, pageName, goBackButtonText } = props;
     return (
         <Header
             statusBarProps={{ barStyle: 'light-content' }}
@@ -16,23 +16,23 @@ function PageHeader(props) {
                                 icon={
                                     <Icon
                                         name="arrow-left"
-                                        size={25}
+                                        size={20}
                                         color='#1e90ff'
                                     />
                                 }
-                                title="Properties"
+                                title={goBackButtonText}
                                 onPress={() => navigation.goBack()}
                                 buttonStyle={styles.goBackButton}
-                                titleStyle={{color: '#1e90ff', fontSize: '18'}}
+                                titleStyle={{color: '#1e90ff', fontSize: width*0.045}}
                             />}
             centerComponent={<Text style= {{ 
                                         color: 'black', 
                                         fontSize: 17, 
                                         //fontWeight: "bold", 
                                         marginTop: 'auto', 
-                                        marginBottom: 14 
+                                        marginBottom: height*0.02,
                                     }}>
-                                    { modelName }
+                                    { pageName }
                             </Text> }
             rightComponent={<View style={styles.hamburgerMenuButton}>
                                 <FontAwesome.Button
@@ -46,8 +46,11 @@ function PageHeader(props) {
                             }
             containerStyle={{
                 backgroundColor: 'white',
-                justifyContent: 'space-around',
-                height: width*0.2
+                //justifyContent: 'space-around',
+                height: width*0.22,
+                borderBottomColor: 'green',
+                borderBottomEndRadius: 2,
+                display: 'flex',
             }}
         />
     )
@@ -57,13 +60,12 @@ export { PageHeader }
 
 const styles = StyleSheet.create ({
     goBackButton: {
-        width: width*0.26,
-        height: height*0.05,
+        width: width*0.28,
         backgroundColor: 'transparent',
-        marginBottom: 0,
-        
+        alignContent: 'flex-start' 
     },
     hamburgerMenuButton: {
+        height: height*0.06,
         backgroundColor: 'transparent',
     }
 })

@@ -21,6 +21,7 @@ class Properties extends Component {
         this.props_url = config.PROPS_URL;
         this.state = { modelID : route.params.modelID, modelName: route.params.modelName, menuDetails : {}, loadingText : 'loading properties...', ready : false};
         this.props_url = config.PROPS_URL;
+        this.goBackButtonText = "Menu";
         this.updateJson = this.updateJson.bind(this);
     }
 
@@ -112,7 +113,8 @@ class Properties extends Component {
             <View>
                 <PageHeader
                     navigation={this.props.navigation}
-                    modelName={this.state.modelName}
+                    pageName="Properties"
+                    goBackButtonText={this.goBackButtonText}
                 />
                 <ScrollView contentInset={{top:10,bottom:50}} style={styles.scrollConainer}>
                     {t}

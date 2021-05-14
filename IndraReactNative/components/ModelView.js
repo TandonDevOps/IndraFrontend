@@ -26,6 +26,7 @@ class ModelView extends Component {
         this.menu_url = config.MENU_URL;
         this.run_url = config.RUN_URL;
         this.graphs = ["population graph, scatter plot, bar graph"];
+        this.goBackButtonText = "Properties";
         this.updateModelId = this.updateModelId.bind(this);
         this.modelExist = this.modelWorking.bind(this);
         this.handleRunPeriod = this.handleRunPeriod.bind(this);
@@ -109,7 +110,8 @@ class ModelView extends Component {
             <View>
                 <PageHeader
                     navigation={this.props.navigation}
-                    modelName={this.state.modelName}
+                    pageName="Model View"
+                    goBackButtonText={this.goBackButtonText}
                 />
                 
                 <Text style={styles.modelStatus}>Model Status:</Text>
@@ -158,28 +160,28 @@ const styles = StyleSheet.create ({
     buttonContainer: {
         backgroundColor: '#f8f8f0'
     },
-    buttonStyle: {
-        width: width*0.3
-    },
     input: {
-        width: width*0.25
+        width: width*0.2,
+        height: height*0.001,
     },
     runButton: {
         backgroundColor: '#00b300',
-        height: height*0.045,
+        height: height*0.05,
         width: width*0.2,
         //size: 15,
-        margin: height*0.005,
-        marginLeft: width*0.026,
+        marginRight: width*0.02,
+        marginLeft: width*0.05,
+        marginTop: height*0.02,
+        padding: 0,
     },
     runText: {
         fontSize: width*0.04,
-        marginTop: height* 0.015,
+        marginTop: height* 0.04,
     },
     rowRun: {
         flexDirection: "row",
-        margin: width*0.05,
-        marginTop: height*0.5,
+        position: 'absolute',
+        marginTop: height*0.9,
     },
     modelStatus: {
         marginTop: height*0.01,
@@ -193,13 +195,4 @@ const styles = StyleSheet.create ({
         height:height/3.5, 
         margin:width*0.02
     },
-    goBackButton: {
-        width: width*0.26,
-        height: height*0.05,
-        backgroundColor: 'transparent',
-        marginBottom: 0,
-        
-    }
-
-
 })
