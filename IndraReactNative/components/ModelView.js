@@ -162,7 +162,7 @@ const styles = StyleSheet.create ({
     },
     input: {
         width: width*0.2,
-        height: height*0.001,
+        marginTop: height*0.015,
     },
     runButton: {
         backgroundColor: '#00b300',

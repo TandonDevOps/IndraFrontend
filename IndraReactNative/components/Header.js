@@ -41,6 +41,8 @@ function PageHeader(props) {
                                 color="#24A0ED"
                                 backgroundColor="transparent"
                                 marginLeft={10}
+                                marginRight={width*0.02}
+                                size={width*0.06}
                                 />
                             </View>
                             }
