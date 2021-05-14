@@ -115,6 +115,7 @@ class Properties extends Component {
                     navigation={this.props.navigation}
                     pageName="Properties"
                     goBackButtonText={this.goBackButtonText}
+                    haveMenu={false}
                 />
                 <ScrollView contentInset={{top:10,bottom:50}} style={styles.scrollConainer}>
                     {t}

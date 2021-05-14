@@ -112,6 +112,7 @@ class ModelView extends Component {
                     navigation={this.props.navigation}
                     pageName="Model View"
                     goBackButtonText={this.goBackButtonText}
+                    haveMenu={true}
                 />
                 
                 <Text style={styles.modelStatus}>Model Status:</Text>
