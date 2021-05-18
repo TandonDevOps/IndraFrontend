@@ -58,7 +58,7 @@ function ScatterPlot(props){
             <ScatterChart
                 backgroundColor='transparent'
                 data={data}
-                chartHeight={height*0.4}
+                chartHeight={height*0.35}
                 chartWidth={width*0.9}
                 minX={0}
                 minY={0}

@@ -33,6 +33,7 @@ class ModelView extends Component {
         this.modelExist = this.modelWorking.bind(this);
         this.handleRunPeriod = this.handleRunPeriod.bind(this);
         this.sendNumPeriods = this.sendNumPeriods.bind(this);
+        this.updateGraph = this.updateGraph(this);
     }
 
     async componentDidMount(){
@@ -58,6 +59,18 @@ class ModelView extends Component {
         
     }
 
+    updateGraph = async () => {
+        var temp;
+        let params = await axios
+        .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
+        .then((response) => {
+            temp = response.data
+            //console.log("set env:", temp);
+            this.setState({envFile: temp, exec_key: temp.exec_key});
+        })
+        .catch(error => console.error(error));
+    }
+
     updateModelId (modelId) {
         this.setState({selectedModel: modelId});
         this.modelWorking(modelId);
@@ -79,13 +92,12 @@ class ModelView extends Component {
         let res = await axios.put(
             `${this.run_url}${periodNum}`,
             envFile
-          );
-        console.log("RUN FOR 10 PERIODS:\n\n\n", await res.data);
-        this.setState({
-            runResult: res.data,
+          )
+        .then((res) => {this.setState({
+            envFile: res.data,
             runModelLoading: false,
             msg: res.data.user.user_msgs,
-          });
+          })})
     }
 
     handleRunPeriod = (n) => {
@@ -120,7 +132,7 @@ class ModelView extends Component {
 
                 <View style={styles.modelStatusContainer}>
                     <ScrollView>
-                        <Text style={styles.modelStatus}>{this.state.msg}</Text>
+                        <Text style={styles.modelStatus} onChange={this.updateGraph}>{this.state.msg}</Text>
                     </ScrollView>
                 </View>
 
