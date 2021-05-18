@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import config from '../../IndraReactCommon/config'
 import { PageHeader } from './Header.js'
+import { ScatterPlot } from './ScatterPlot'
 
 
 var width = Dimensions.get('window').width;
@@ -21,7 +22,8 @@ class ModelView extends Component {
                       periodNum: 10,
                       ready: false, 
                       runModelLoading: false,
-                      modelWorking: true};
+                      modelWorking: true,
+                    };
         this.props_url = config.PROPS_URL;
         this.menu_url = config.MENU_URL;
         this.run_url = config.RUN_URL;
@@ -35,12 +37,12 @@ class ModelView extends Component {
 
     async componentDidMount(){
         var temp;
-        let params = axios
+        let params = await axios
         .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
         .then((response) => {
             temp = response.data
-            console.log("set env:", temp);
-            this.setState({env: temp, execKey: temp.exec_key});
+            //console.log("set env:", temp);
+            this.setState({envFile: temp, exec_key: temp.exec_key});
             return axios.get(`${this.menu_url}`);
         })
         .then((response) => {
@@ -71,13 +73,12 @@ class ModelView extends Component {
 
     sendNumPeriods = async () => {
         
-        const { periodNum, env } = this.state;
+        const { periodNum, envFile } = this.state;
+        console.log("RUNNING:", envFile, "periodNum:", periodNum);
         this.setState({ runModelLoading: true });
-        console.log("In sendNumPeriods\n")
-        console.log("env:", env);
         let res = await axios.put(
             `${this.run_url}${periodNum}`,
-            env
+            envFile
           );
         console.log("RUN FOR 10 PERIODS:\n\n\n", await res.data);
         this.setState({
@@ -102,7 +103,7 @@ class ModelView extends Component {
         
         
         
-        
+        console.log("envFile:", this.state.envFile);
         if(this.state.ready != true) return <View><Text>temp</Text></View>;
         else{
 
@@ -121,6 +122,12 @@ class ModelView extends Component {
                     <ScrollView>
                         <Text style={styles.modelStatus}>{this.state.msg}</Text>
                     </ScrollView>
+                </View>
+
+                <View>
+                    <ScatterPlot
+                        envFile={this.state.envFile}
+                    />
                 </View>
 
                 
