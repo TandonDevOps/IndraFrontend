@@ -37,7 +37,7 @@ function PageHeader(props) {
                             </Text> }
             rightComponent={<View style={styles.hamburgerMenuButton}>
                                 <FontAwesome.Button
-                                onPress={() => alert("hello")}
+                                onPress={() => alert("The button is in dev.")}
                                 name="bars"
                                 color="#24A0ED"
                                 backgroundColor="transparent"
