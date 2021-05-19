@@ -127,16 +127,18 @@ class ModelView extends Component {
                     goBackButtonText={this.goBackButtonText}
                     haveMenu={true}
                 />
-                
-                <Text style={styles.modelStatus}>Model Status:</Text>
 
-                <View style={styles.modelStatusContainer}>
-                    <ScrollView>
-                        <Text style={styles.modelStatus} onChange={this.updateGraph}>{this.state.msg}</Text>
-                    </ScrollView>
+                <View style={{zIndex:-10}}>
+                    <Text style={styles.modelStatus}>Model Status:</Text>
+
+                    <View style={styles.modelStatusContainer}>
+                        <ScrollView>
+                            <Text style={styles.modelStatus} onChange={this.updateGraph}>{this.state.msg}</Text>
+                        </ScrollView>
+                    </View>
                 </View>
 
-                <View>
+                <View style={{zIndex:-10}}>
                     <ScatterPlot
                         envFile={this.state.envFile}
                     />
@@ -213,6 +215,6 @@ const styles = StyleSheet.create ({
         borderWidth:3, 
         opacity:0.9, 
         height:height/3.5, 
-        margin:width*0.02
+        margin:width*0.02,
     },
 })
