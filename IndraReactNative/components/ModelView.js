@@ -3,6 +3,7 @@ import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback } from 're
 import { Button, Input } from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay';
 import config from '../../IndraReactCommon/config'
 import { PageHeader } from './Header.js'
 import { ScatterPlot } from './ScatterPlot'
@@ -61,6 +62,7 @@ class ModelView extends Component {
 
     updateGraph = async () => {
         var temp;
+        //this.setState({ready: false})
         let params = await axios
         .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
         .then((response) => {
@@ -111,12 +113,18 @@ class ModelView extends Component {
 
     render(){
         //console.log("find model name:", this.state.modelParams);
-        var temp = <Text>loading...</Text>
+
         
         
         
         console.log("envFile:", this.state.envFile);
-        if(this.state.ready != true) return <View><Text>temp</Text></View>;
+        if(this.state.ready != true) return <View style={styles.spinnerContainer}>
+                                                <Spinner
+                                                    visible={!this.state.ready}
+                                                    textContent={'Loading...'}
+                                                    textStyle={styles.spinnerTextStyle}
+                                                    />
+                                            </View>;
         else{
 
         return(
@@ -163,7 +171,13 @@ class ModelView extends Component {
                     <Text style={styles.runText}>periods.</Text>
                 </View>
                     
-
+                {this.state.runModelLoading == true?<View style={styles.spinnerContainer}>
+                                                    <Spinner
+                                                        visible={this.state.runModelLoading}
+                                                        textContent={'Loading...'}
+                                                        textStyle={styles.spinnerTextStyle}
+                                                        />
+                                                    </View>: null}
 
             </View>
         )}
@@ -217,4 +231,13 @@ const styles = StyleSheet.create ({
         height:height/3.5, 
         margin:width*0.02,
     },
+    spinnerTextStyle: {
+        color: '#616161',
+    },
+    spinnerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+      },
 })
