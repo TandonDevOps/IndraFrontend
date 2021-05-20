@@ -24,8 +24,9 @@
  let CLEAR_REGISTRY_URL = API_URL + 'registry/clear/';
  let POPHIST_URL = API_URL + 'pophist/';
  let USER_MSGS_URL = API_URL + 'user/msgs/';
+ let DEBUG_URL = API_URL + 'menus/debug';
 
- const config = { API_URL, PROPS_URL, MENU_URL, RUN_URL, CLEAR_REGISTRY_URL, POPHIST_URL, USER_MSGS_URL };
+ const config = { API_URL, PROPS_URL, MENU_URL, RUN_URL, CLEAR_REGISTRY_URL, POPHIST_URL, USER_MSGS_URL, DEBUG_URL };
  
  export default config;
  

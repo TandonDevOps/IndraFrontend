@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { Button, ButtonGroup, Icon, Input, Header } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
+import { Button, Input } from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay';
 import config from '../../IndraReactCommon/config'
+import { PageHeader } from './Header.js'
+import { ScatterPlot } from './ScatterPlot'
 
 
 var width = Dimensions.get('window').width;
@@ -21,25 +23,28 @@ class ModelView extends Component {
                       periodNum: 10,
                       ready: false, 
                       runModelLoading: false,
-                      modelWorking: true};
+                      modelWorking: true,
+                    };
         this.props_url = config.PROPS_URL;
         this.menu_url = config.MENU_URL;
         this.run_url = config.RUN_URL;
         this.graphs = ["population graph, scatter plot, bar graph"];
+        this.goBackButtonText = "Properties";
         this.updateModelId = this.updateModelId.bind(this);
         this.modelExist = this.modelWorking.bind(this);
         this.handleRunPeriod = this.handleRunPeriod.bind(this);
         this.sendNumPeriods = this.sendNumPeriods.bind(this);
+        this.updateGraph = this.updateGraph(this);
     }
 
     async componentDidMount(){
         var temp;
-        let params = axios
+        let params = await axios
         .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
         .then((response) => {
             temp = response.data
-            console.log("set env:", temp);
-            this.setState({env: temp, execKey: temp.exec_key});
+            //console.log("set env:", temp);
+            this.setState({envFile: temp, exec_key: temp.exec_key});
             return axios.get(`${this.menu_url}`);
         })
         .then((response) => {
@@ -53,6 +58,19 @@ class ModelView extends Component {
         .catch(error => console.error(error));
         this.setState({ready: true});
         
+    }
+
+    updateGraph = async () => {
+        var temp;
+        //this.setState({ready: false})
+        let params = await axios
+        .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
+        .then((response) => {
+            temp = response.data
+            //console.log("set env:", temp);
+            this.setState({envFile: temp, exec_key: temp.exec_key});
+        })
+        .catch(error => console.error(error));
     }
 
     updateModelId (modelId) {
@@ -70,20 +88,18 @@ class ModelView extends Component {
 
     sendNumPeriods = async () => {
         
-        const { periodNum, env } = this.state;
+        const { periodNum, envFile } = this.state;
+        console.log("RUNNING:", envFile, "periodNum:", periodNum);
         this.setState({ runModelLoading: true });
-        console.log("In sendNumPeriods\n")
-        console.log("env:", env);
         let res = await axios.put(
             `${this.run_url}${periodNum}`,
-            env
-          );
-        console.log("RUN FOR 10 PERIODS:\n\n\n", await res.data);
-        this.setState({
-            runResult: res.data,
+            envFile
+          )
+        .then((res) => {this.setState({
+            envFile: res.data,
             runModelLoading: false,
             msg: res.data.user.user_msgs,
-          });
+          })})
     }
 
     handleRunPeriod = (n) => {
@@ -97,64 +113,43 @@ class ModelView extends Component {
 
     render(){
         //console.log("find model name:", this.state.modelParams);
-        var temp = <Text>loading...</Text>
+
         
         
         
-        
-        if(this.state.ready != true) return <View><Text>temp</Text></View>;
+        console.log("envFile:", this.state.envFile);
+        if(this.state.ready != true) return <View style={styles.spinnerContainer}>
+                                                <Spinner
+                                                    visible={!this.state.ready}
+                                                    textContent={'Loading...'}
+                                                    textStyle={styles.spinnerTextStyle}
+                                                    />
+                                            </View>;
         else{
 
         return(
             <View>
-                <Header
-                    statusBarProps={{ barStyle: 'light-content' }}
-                    barStyle="light-content" // or directly
-                    leftComponent={<Button
-                                        icon={
-                                            <Icon
-                                                name="arrow-left"
-                                                size={25}
-                                                color='#1e90ff'
-                                            />
-                                        }
-                                        title="Properties"
-                                        onPress={() => this.props.navigation.goBack()}
-                                        buttonStyle={styles.goBackButton}
-                                        titleStyle={{color: '#1e90ff', fontSize: '18'}}
-                                    />}
-                    centerComponent={<Text style= {{ 
-                                                color: 'black', 
-                                                fontSize: 17, 
-                                                //fontWeight: "bold", 
-                                                marginTop: 'auto', 
-                                                marginBottom: 14 
-                                            }}>
-                                            {this.state.modelName}
-                                    </Text> }
-                    rightComponent={<View style={styles.container}>
-                                        <FontAwesome.Button
-                                        onPress={() => alert("hello")}
-                                        name="bars"
-                                        color="#24A0ED"
-                                        backgroundColor="transparent"
-                                        marginLeft={10}
-                                        />
-                                    </View>
-                                    }
-                    containerStyle={{
-                    backgroundColor: 'white',
-                    justifyContent: 'space-around',
-                    height: width*0.2
-                }}
+                <PageHeader
+                    navigation={this.props.navigation}
+                    pageName="Model View"
+                    goBackButtonText={this.goBackButtonText}
+                    haveMenu={true}
                 />
-                
-                <Text style={styles.modelStatus}>Model Status:</Text>
 
-                <View style={styles.modelStatusContainer}>
-                    <ScrollView>
-                        <Text style={styles.modelStatus}>{this.state.msg}</Text>
-                    </ScrollView>
+                <View style={{zIndex:-10}}>
+                    <Text style={styles.modelStatus}>Model Status:</Text>
+
+                    <View style={styles.modelStatusContainer}>
+                        <ScrollView>
+                            <Text style={styles.modelStatus} onChange={this.updateGraph}>{this.state.msg}</Text>
+                        </ScrollView>
+                    </View>
+                </View>
+
+                <View style={{zIndex:-10}}>
+                    <ScatterPlot
+                        envFile={this.state.envFile}
+                    />
                 </View>
 
                 
@@ -176,7 +171,13 @@ class ModelView extends Component {
                     <Text style={styles.runText}>periods.</Text>
                 </View>
                     
-
+                {this.state.runModelLoading == true?<View style={styles.spinnerContainer}>
+                                                    <Spinner
+                                                        visible={this.state.runModelLoading}
+                                                        textContent={'Loading...'}
+                                                        textStyle={styles.spinnerTextStyle}
+                                                        />
+                                                    </View>: null}
 
             </View>
         )}
@@ -195,28 +196,28 @@ const styles = StyleSheet.create ({
     buttonContainer: {
         backgroundColor: '#f8f8f0'
     },
-    buttonStyle: {
-        width: width*0.3
-    },
     input: {
-        width: width*0.25
+        width: width*0.2,
+        marginTop: height*0.015,
     },
     runButton: {
         backgroundColor: '#00b300',
-        height: height*0.045,
+        height: height*0.05,
         width: width*0.2,
         //size: 15,
-        margin: height*0.005,
-        marginLeft: width*0.026,
+        marginRight: width*0.02,
+        marginLeft: width*0.05,
+        marginTop: height*0.02,
+        padding: 0,
     },
     runText: {
         fontSize: width*0.04,
-        marginTop: height* 0.015,
+        marginTop: height* 0.04,
     },
     rowRun: {
         flexDirection: "row",
-        margin: width*0.05,
-        marginTop: height*0.5,
+        position: 'absolute',
+        marginTop: height*0.9,
     },
     modelStatus: {
         marginTop: height*0.01,
@@ -228,15 +229,15 @@ const styles = StyleSheet.create ({
         borderWidth:3, 
         opacity:0.9, 
         height:height/3.5, 
-        margin:width*0.02
+        margin:width*0.02,
     },
-    goBackButton: {
-        width: width*0.26,
-        height: height*0.05,
-        backgroundColor: 'transparent',
-        marginBottom: 0,
-        
-    }
-
-
+    spinnerTextStyle: {
+        color: '#616161',
+    },
+    spinnerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+      },
 })
