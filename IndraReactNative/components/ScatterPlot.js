@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
-import ScatterChart from 'react-native-scatter-chart';
+import { VictoryChart, VictoryTheme, VictoryScatter } from "victory-native";
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 function ScatterPlot(props){
-    const { envFile } = props;
+    const { envFile, grid_height, grid_width } = props;
     console.log("\n\n########Scatter Plot#########\n\n");
     const pointStyles = [
         'circle',
@@ -30,41 +30,51 @@ function ScatterPlot(props){
       };
       
     const env = envFile.env.members;
+    console.log(env);
     const data = [];
     const dataset = {
         pointStyle: 'circle',
     };
-    Object.keys(env).forEach((group, iGroup) => {
-        data.push({
+    console.log("DEBUG:", env["Burned Out"])
+    Object.keys(env).forEach((group, index) => {
+    console.log("In forEach.", group)
+      data.push({
         color: env[group].color,
-        unit: '%',
-        values: [],
-        });
+        data: [],
+      });
+        //console.log("data: ", data);
         const markerProp = env[group].attrs.marker;
         dataset.pointStyle = markerProp in markerMap ? markerMap[env[group].attrs.marker] : 'circle';
         Object.keys(env[group].members).forEach((member) => {
         if (env[group].members[member].pos !== null) {
-            data[iGroup].values.push(
-            env[group].members[member].pos,
+            data[index].data.push(
+            {x: env[group].members[member].pos[0], y: env[group].members[member].pos[1]},
             );
         }
         });
     });
-    console.log("dataset: ", dataset);
-    console.log("data: ", data);
+    //console.log("dataset: ", dataset);
+    console.log("data: ", data[0]["data"]);
     return (
         <View style={styles.scatter}>
-            <Text style={{marginBottom: 10}}>Scatter Plot:</Text>
-            <ScatterChart
-                backgroundColor='transparent'
-                data={data}
-                chartHeight={height*0.35}
-                chartWidth={width*0.9}
-                minX={0}
-                minY={0}
-                horizontalLinesAt={[0,10,20,30,40]}
-                verticalLinesAt={[0,10,20,30,40]}
-            />
+            <Text style={{marginTop: height*0.01, marginLeft: width*0.03}}>Scatter Plot:</Text>
+            <VictoryChart
+                theme={VictoryTheme.material}
+                domain={{ x: [0, grid_width], y: [0, grid_height] }}
+                height={width*0.85}
+                padding={{ top: height*0.01, bottom: height*0.1, left: width*0.1, right: width*0.05 }}
+                >
+                {data.map((value, index) => {
+                    return <VictoryScatter
+                                style={{ data: { fill: data[index].color } }}
+                                size={2}
+                                data={data[index].data}
+                                
+                            />
+                })}
+                
+                
+                </VictoryChart>
         </View>
         
     );
@@ -74,6 +84,7 @@ export { ScatterPlot };
     
 const styles = StyleSheet.create ({
     scatter:{
-        margin: width*0.05
+        width: width*0.9,
+        height: height*0.4,
     }
 })

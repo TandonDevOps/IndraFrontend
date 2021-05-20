@@ -43,16 +43,13 @@ class ModelView extends Component {
         .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
         .then((response) => {
             temp = response.data
-            //console.log("set env:", temp);
             this.setState({envFile: temp, exec_key: temp.exec_key});
             return axios.get(`${this.menu_url}`);
         })
         .then((response) => {
-            //console.log(response.data[0]);
             temp = JSON.stringify(response.data);
             
             this.setState({models: temp, ready: true});
-            //console.log("active:", response.data[0].active, response.data[1].active, response.data[2].active, response.data[3].active, response.data[4].active, response.data[5].active, response.data[6].active)
             if (response.data[1].active === false) this.setState({modelWorking: false});
         })
         .catch(error => console.error(error));
@@ -67,7 +64,6 @@ class ModelView extends Component {
         .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
         .then((response) => {
             temp = response.data
-            //console.log("set env:", temp);
             this.setState({envFile: temp, exec_key: temp.exec_key});
         })
         .catch(error => console.error(error));
@@ -80,8 +76,6 @@ class ModelView extends Component {
 
     modelWorking (modelId) {
         var obj = JSON.parse(this.state.models);
-        //console.log("active?", obj[modelId+1].active, obj[modelId+1].func);
-        //console.log("active status:", obj[0].active, obj[1].active, obj[2].active, obj[3].active, obj[4].active, obj[5].active, obj[6].active, "\n");
         if (obj[modelId+1].active === false) this.setState({modelWorking: false});
         else this.setState({modelWorking: true});
     }
@@ -89,7 +83,7 @@ class ModelView extends Component {
     sendNumPeriods = async () => {
         
         const { periodNum, envFile } = this.state;
-        console.log("RUNNING:", envFile, "periodNum:", periodNum);
+        //("RUNNING:", envFile, "periodNum:", periodNum);
         this.setState({ runModelLoading: true });
         let res = await axios.put(
             `${this.run_url}${periodNum}`,
@@ -112,12 +106,9 @@ class ModelView extends Component {
 
 
     render(){
-        //console.log("find model name:", this.state.modelParams);
-
-        
-        
-        
-        console.log("envFile:", this.state.envFile);
+        //console.log("envFile:", this.state.envFile);
+        const grid_height = this.state.modelParams.grid_height.val;
+        const grid_width = this.state.modelParams.grid_width.val;
         if(this.state.ready != true) return <View style={styles.spinnerContainer}>
                                                 <Spinner
                                                     visible={!this.state.ready}
@@ -149,6 +140,8 @@ class ModelView extends Component {
                 <View style={{zIndex:-10}}>
                     <ScatterPlot
                         envFile={this.state.envFile}
+                        grid_height={grid_height}
+                        grid_width={grid_width}
                     />
                 </View>
 
