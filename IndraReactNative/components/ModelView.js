@@ -21,6 +21,7 @@ class ModelView extends Component {
         this.state = {modelParams: route.params.modelParams, 
                       modelID: route.params.modelID, 
                       modelName: route.params.modelName, 
+                      modelGraph: route.params.modelGraph,
                       selectedModel: 0, 
                       periodNum: 10,
                       ready: false, 
@@ -32,7 +33,7 @@ class ModelView extends Component {
         this.props_url = config.PROPS_URL;
         this.menu_url = config.MENU_URL;
         this.run_url = config.RUN_URL;
-        this.graphs = ["population graph, scatter plot, bar graph"];
+        this.graphs = ["population graph", "scatter plot", "bar graph"];
         this.goBackButtonText = "Properties";
         this.updateModelId = this.updateModelId.bind(this);
         this.modelExist = this.modelWorking.bind(this);
@@ -62,6 +63,8 @@ class ModelView extends Component {
             if (response.data[1].active === false) this.setState({modelWorking: false});
         })
         .catch(error => console.error(error));
+        if(this.state.modelGraph == "scatter") this.setState({selectedModel: 1})
+        else this.setState({selectedModel: 0});
         this.setState({ready: true});
         
     }
@@ -139,8 +142,12 @@ class ModelView extends Component {
 
 
     render(){
-        const grid_height = this.state.modelParams.grid_height.val;
-        const grid_width = this.state.modelParams.grid_width.val;
+        var grid_height, grid_width = 0;
+        try {grid_height = this.state.modelParams.grid_height.val;}
+        catch {grid_height = 20}
+        try {grid_width = this.state.modelParams.grid_width.val;}
+        catch {grid_width = 20}
+        
         if(this.state.ready != true) return <View style={styles.spinnerContainer}>
                                                 <Spinner
                                                     visible={!this.state.ready}
@@ -157,6 +164,8 @@ class ModelView extends Component {
                     pageName="Model View"
                     goBackButtonText={this.goBackButtonText}
                     haveMenu={true}
+                    options={this.graphs}
+                    selectedModel={this.state.selectedModel}
                 />
 
                 <View style={{zIndex:-10}}>

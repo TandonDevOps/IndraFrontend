@@ -7,9 +7,9 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 function PageHeader(props) {
-    const { navigation, pageName, goBackButtonText, haveMenu } = props;
+    const { navigation, pageName, goBackButtonText, haveMenu, options, selectedModel } = props;
     const [menuOpen, setOpen] = useState(0);
-    const options = ['Population Graph', 'Scatter Plot', 'Debug Menu'];
+    console.log("selectedModel:", selectedModel);
     if (haveMenu)
     return (
         <View>
@@ -77,11 +77,16 @@ function PageHeader(props) {
                             <Card.Divider/>
                             <View>
                             {
-                                options.map((option) => {
+                                options.map((option, i) => {
                                 return (
                                     <View>
                                         <Button
                                             title={option}
+                                            titleStyle={{
+                                                fontSize: 14,
+                                            }}
+                                            disabled={selectedModel == i? false:true}
+                                            buttonStyle={styles.chooseOptionButton}
                                         >
                                         </Button>
                                         <Card.Divider/>
@@ -163,5 +168,10 @@ const styles = StyleSheet.create ({
         height: height*0.05, 
         marginBottom: width*0.05, 
         marginLeft: width*0.18
+    },
+    chooseOptionButton: {
+        fontSize: 15,
+        height: height*0.06,
+        padding: 0,
     }
 })
