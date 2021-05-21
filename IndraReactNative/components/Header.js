@@ -47,6 +47,7 @@ function PageHeader(props) {
                                 marginLeft={10}
                                 marginRight={width*0.02}
                                 size={width*0.06}
+                                underlayColor='transparent'
                                 />
                             </View>
                             }

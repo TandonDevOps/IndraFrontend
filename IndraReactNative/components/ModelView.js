@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { Button, Input, Icon } from 'react-native-elements';
 import axios from 'axios';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { FontAwesome } from '@expo/vector-icons';
+//import { setTimeout } from 'timers'
 import config from '../../IndraReactCommon/config'
 import { PageHeader } from './Header.js'
 import { ScatterPlot } from './ScatterPlot'
@@ -24,6 +26,8 @@ class ModelView extends Component {
                       ready: false, 
                       runModelLoading: false,
                       modelWorking: true,
+                      runMenuOpen: false,
+                      continuousRun: false,
                     };
         this.props_url = config.PROPS_URL;
         this.menu_url = config.MENU_URL;
@@ -34,7 +38,12 @@ class ModelView extends Component {
         this.modelExist = this.modelWorking.bind(this);
         this.handleRunPeriod = this.handleRunPeriod.bind(this);
         this.sendNumPeriods = this.sendNumPeriods.bind(this);
-        this.updateGraph = this.updateGraph(this);
+        this.updateGraph = this.updateGraph.bind(this);
+        this.toggleRunMenu = this.toggleRunMenu.bind(this);
+        this.continuousRun = this.continuousRun.bind(this);
+        this.stopRun = this.stopRun.bind(this);
+        this.timeout = this.timeout.bind(this);
+        
     }
 
     async componentDidMount(){
@@ -83,8 +92,10 @@ class ModelView extends Component {
     sendNumPeriods = async () => {
         
         const { periodNum, envFile } = this.state;
-        //("RUNNING:", envFile, "periodNum:", periodNum);
+        console.log("periodNum:", periodNum);
         this.setState({ runModelLoading: true });
+        console.log("runModelLoading:", this.state.runModelLoading);
+        console.log("Run model loading:", this.state.runModelLoading)
         let res = await axios.put(
             `${this.run_url}${periodNum}`,
             envFile
@@ -94,19 +105,40 @@ class ModelView extends Component {
             runModelLoading: false,
             msg: res.data.user.user_msgs,
           })})
+        
     }
 
     handleRunPeriod = (n) => {
         this.setState({
             periodNum: n,
           });
+        console.log("In handleRunPeriod:", this.state.periodNum)
     }
 
+    toggleRunMenu = () => {
+        var newState = !this.state.runMenuOpen;
+        this.setState({runMenuOpen: newState})
+    }
+
+    timeout(ms) { //pass a time in milliseconds to this function
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+    async continuousRun (){
+        await this.setState({periodNum: 1, continuousRun: true});
+        while(this.state.continuousRun){
+            await this.sendNumPeriods(1);
+            this.timeout(2000);
+        }
+        
+      }
     
+      stopRun = () => {
+        this.setState({continuousRun: false});
+      }
 
 
     render(){
-        //console.log("envFile:", this.state.envFile);
         const grid_height = this.state.modelParams.grid_height.val;
         const grid_width = this.state.modelParams.grid_width.val;
         if(this.state.ready != true) return <View style={styles.spinnerContainer}>
@@ -146,13 +178,45 @@ class ModelView extends Component {
                 </View>
 
                 
-
-                <View style={styles.rowRun}>
+                {this.state.runMenuOpen == true? 
+                    <View style={styles.runMenu}>
+                        <Button
+                            title="Continuous Run"
+                            onPress={ this.continuousRun }
+                            buttonStyle={styles.continuousRunButton}
+                            titleStyle={{
+                                fontSize: 15,
+                            }}
+                        />
+                        <Button
+                            title="Stop"
+                            onPress={ this.stopRun }
+                            buttonStyle={styles.stopButton}
+                            titleStyle={{
+                                fontSize: 15,
+                            }}
+                        />
+                        <View style={{marginTop: height*0.03, marginLeft: width*0.02, underlayColor:'transparent', backgroundColor:'transparent'}}>
+                            <FontAwesome.Button
+                                name="retweet"
+                                size={16}
+                                color="#24A0ED"
+                                underlayColor='transparent'
+                                backgroundColor='transparent'
+                                onPress={this.toggleRunMenu}
+                            />
+                        </View>
+                    </View> 
+                    :<View style={styles.rowRun}>
+                    <TouchableOpacity onLongPress={ this.toggleRunMenu } onPress={ this.sendNumPeriods }>
                     <Button
                         title="run"
-                        onPress={ this.sendNumPeriods }
-                        buttonStyle={styles.runButton}
+                        buttonStyle={styles.runButtonSingle}
+                        titleStyle={{
+                            fontSize: 15,
+                        }}
                     />
+                    </TouchableOpacity>
                     
                     <Text style={styles.runText}>model for</Text>
                     <Input
@@ -162,15 +226,31 @@ class ModelView extends Component {
                         containerStyle={styles.input}
                     />
                     <Text style={styles.runText}>periods.</Text>
-                </View>
+                    <View 
+                        style={{marginTop: height*0.03, marginLeft: width*0.02, backgroundColor:'transparent'}}
+                        
+                        >
+                        <FontAwesome.Button
+                                name="retweet"
+                                size={16}
+                                color="#24A0ED"
+                                underlayColor="transparent"
+                                backgroundColor="transparent"
+                                onPress={this.toggleRunMenu}
+                            />
+                    </View>
+                </View>}
+                
                     
-                {this.state.runModelLoading == true?<View style={styles.spinnerContainer}>
-                                                    <Spinner
-                                                        visible={this.state.runModelLoading}
-                                                        textContent={'Loading...'}
-                                                        textStyle={styles.spinnerTextStyle}
-                                                        />
-                                                    </View>: null}
+                {(this.state.runModelLoading == true & this.state.continuousRun == false)?
+                    <View style={styles.spinnerContainer}>
+                        <Spinner
+                            visible={this.state.runModelLoading}
+                            textContent={'Loading...'}
+                            textStyle={styles.spinnerTextStyle}
+                            />
+                    </View>: null
+                }
 
             </View>
         )}
@@ -193,14 +273,41 @@ const styles = StyleSheet.create ({
         width: width*0.2,
         marginTop: height*0.015,
     },
+    runButtonSingle: {
+        backgroundColor: '#00b300',
+        height: height*0.05,
+        width: width*0.2,
+        marginRight: width*0.02,
+        marginLeft: width*0.06,
+        marginTop: height*0.03,
+        padding: 0,
+    },
     runButton: {
         backgroundColor: '#00b300',
         height: height*0.05,
         width: width*0.2,
-        //size: 15,
+        
         marginRight: width*0.02,
-        marginLeft: width*0.05,
-        marginTop: height*0.02,
+        marginLeft: width*0.03,
+        marginTop: height*0.03,
+        padding: 0,
+    },
+    continuousRunButton: {
+        backgroundColor: '#00b300',
+        height: height*0.05,
+        width: width*0.5,
+        marginRight: width*0.02,
+        marginLeft: width*0.072,
+        marginTop: height*0.03,
+        padding: 0,
+    },
+    stopButton: {
+        backgroundColor: '#c82333',
+        height: height*0.05,
+        width: width*0.2,
+        marginRight: width*0.02,
+        //marginLeft: width*0.05,
+        marginTop: height*0.03,
         padding: 0,
     },
     runText: {
@@ -211,6 +318,17 @@ const styles = StyleSheet.create ({
         flexDirection: "row",
         position: 'absolute',
         marginTop: height*0.9,
+        zIndex: 0,
+        backgroundColor: 'transparent'
+    },
+    runMenu: {
+        flexDirection: "row",
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        height: height*1,
+        width: width*1,
+        marginTop: height*0.9,
+        zIndex: 200,
     },
     modelStatus: {
         marginTop: height*0.01,

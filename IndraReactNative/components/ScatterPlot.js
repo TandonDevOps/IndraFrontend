@@ -30,14 +30,11 @@ function ScatterPlot(props){
       };
       
     const env = envFile.env.members;
-    console.log(env);
     const data = [];
     const dataset = {
         pointStyle: 'circle',
     };
-    console.log("DEBUG:", env["Burned Out"])
     Object.keys(env).forEach((group, index) => {
-    console.log("In forEach.", group)
       data.push({
         color: env[group].color,
         data: [],
@@ -54,7 +51,7 @@ function ScatterPlot(props){
         });
     });
     //console.log("dataset: ", dataset);
-    console.log("data: ", data[0]["data"]);
+    //console.log("data: ", data[0]["data"]);
     return (
         <View style={styles.scatter}>
             <Text style={{marginTop: height*0.01, marginLeft: width*0.03}}>Scatter Plot:</Text>
@@ -62,7 +59,7 @@ function ScatterPlot(props){
                 theme={VictoryTheme.material}
                 domain={{ x: [0, grid_width], y: [0, grid_height] }}
                 height={width*0.85}
-                padding={{ top: height*0.01, bottom: height*0.1, left: width*0.1, right: width*0.05 }}
+                padding={{ top: height*0.01, bottom: height*0.11, left: width*0.1, right: width*0.05 }}
                 >
                 {data.map((value, index) => {
                     return <VictoryScatter
