@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import config from '../../IndraReactCommon/config'
 import { PageHeader } from './Header.js'
 import { ScatterPlot } from './ScatterPlot'
+import { PopulationGraph } from './PopulationGraph.js'
 
 
 var width = Dimensions.get('window').width;
@@ -29,10 +30,13 @@ class ModelView extends Component {
                       modelWorking: true,
                       runMenuOpen: false,
                       continuousRun: false,
+                      popHist: {},
+                      totalRunPeriod: 0
                     };
         this.props_url = config.PROPS_URL;
         this.menu_url = config.MENU_URL;
         this.run_url = config.RUN_URL;
+        this.pophist_url = config.POPHIST_URL;
         this.graphs = ["population graph", "scatter plot", "bar graph"];
         this.goBackButtonText = "Properties";
         this.updateModelId = this.updateModelId.bind(this);
@@ -61,6 +65,11 @@ class ModelView extends Component {
             
             this.setState({models: temp, ready: true});
             if (response.data[1].active === false) this.setState({modelWorking: false});
+            return axios.get(`${this.pophist_url}${this.state.exec_key}`)
+        })
+        .then((res) => {
+            console.log("first fetched data:", res.data);
+            this.setState({popHist: res.data.pops})
         })
         .catch(error => console.error(error));
         if(this.state.modelGraph == "scatter") this.setState({selectedModel: 1})
@@ -70,15 +79,29 @@ class ModelView extends Component {
     }
 
     updateGraph = async () => {
-        var temp;
-        //this.setState({ready: false})
-        let params = await axios
-        .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
-        .then((response) => {
-            temp = response.data
-            this.setState({envFile: temp, exec_key: temp.exec_key});
+        console.log("in update Graph")
+        if(this.state.selectedModel == 1){
+            var temp;
+            //this.setState({ready: false})
+            let params = await axios
+            .put(`${this.props_url}${this.state.modelID}`, this.state.modelParams)
+            .then((response) => {
+                temp = response.data
+                this.setState({envFile: temp, exec_key: temp.exec_key});
+                //console.log("fetched scatter data")
+            })
+            .catch(error => console.error(error));
+        }
+        else{
+        axios
+        .get(`${this.pophist_url}${this.state.exec_key}`)
+        .then((res) => {
+            //console.log("fetched data:", res.data);
+            this.setState({popHist: res.data.pops})
         })
         .catch(error => console.error(error));
+        }
+        
     }
 
     updateModelId (modelId) {
@@ -93,21 +116,45 @@ class ModelView extends Component {
     }
 
     sendNumPeriods = async () => {
-        
-        const { periodNum, envFile } = this.state;
+        const { periodNum, totalRunPeriod, envFile } = this.state;
+        //totalRunPeriod = totalRunPeriod + periodNum
         console.log("periodNum:", periodNum);
         this.setState({ runModelLoading: true });
         console.log("runModelLoading:", this.state.runModelLoading);
         console.log("Run model loading:", this.state.runModelLoading)
-        let res = await axios.put(
-            `${this.run_url}${periodNum}`,
-            envFile
-          )
-        .then((res) => {this.setState({
-            envFile: res.data,
-            runModelLoading: false,
-            msg: res.data.user.user_msgs,
-          })})
+        if (this.state.selectedModel == 1){
+            let res = await axios.put(
+                `${this.run_url}${periodNum}`,
+                envFile
+            )
+            .then((res) => {this.setState({
+                envFile: res.data,
+                msg: res.data.user.user_msgs,
+                runModelLoading: false,
+                totalRunPeriod: totalRunPeriod,
+            })
+            });
+        }
+        else{
+            let res = await axios.put(
+                `${this.run_url}${periodNum}`,
+                envFile
+            )
+            .then((res) => {this.setState({
+                envFile: res.data,
+                msg: res.data.user.user_msgs,
+                runModelLoading: false,
+                totalRunPeriod: totalRunPeriod,
+                exec_key: res.data.exec_key
+            });
+            return axios.get(`${this.pophist_url}${this.state.exec_key}`, )
+            })
+            .then((res) => {
+                this.setState({
+                    popHist: res.data
+                })
+            })
+        }
         
     }
 
@@ -125,7 +172,13 @@ class ModelView extends Component {
 
     timeout(ms) { //pass a time in milliseconds to this function
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+    }
+
+    fetchPopHist = async () => {
+        console.log("fetching...")
+        let res = await axios.get(`${POPHIST_URL}${EXEC_KEY}`)
+        .then((res) => {this.setState({popHist: res.data.pops})});
+    }
 
     async continuousRun (){
         await this.setState({periodNum: 1, continuousRun: true});
@@ -142,11 +195,25 @@ class ModelView extends Component {
 
 
     render(){
+        console.log("totalRunPeriod:", this.state.totalRunPeriod);
+        console.log("exec_key:", this.state.exec_key)
+        console.log("popHist:", this.state.popHist)
         var grid_height, grid_width = 0;
         try {grid_height = this.state.modelParams.grid_height.val;}
-        catch {grid_height = 20}
+        catch {grid_height = 30}
         try {grid_width = this.state.modelParams.grid_width.val;}
         catch {grid_width = 20}
+        var graph = <ScatterPlot
+                        envFile={this.state.envFile}
+                        grid_height={grid_height}
+                        grid_width={grid_width}
+                    />
+        var populationGraph = <PopulationGraph
+                                popHist={this.state.popHist}
+                                grid_height={grid_height}
+                                grid_width={grid_width}
+                            />
+        if (this.state.selectedModel == 0) graph = populationGraph;
         
         if(this.state.ready != true) return <View style={styles.spinnerContainer}>
                                                 <Spinner
@@ -179,11 +246,7 @@ class ModelView extends Component {
                 </View>
 
                 <View style={{zIndex:-10}}>
-                    <ScatterPlot
-                        envFile={this.state.envFile}
-                        grid_height={grid_height}
-                        grid_width={grid_width}
-                    />
+                    {graph}
                 </View>
 
                 
