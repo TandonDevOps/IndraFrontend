@@ -41,8 +41,9 @@ function PopulationGraph(props) {
         });
         thisColor += 1;
     });
-    }
+}
     console.log("data:", data)
+    if (env != null)
     return (
         <View style={styles.line}>
         <Text style={{marginTop: height*0.01, marginLeft: width*0.03}}>Population Graph:</Text>
@@ -63,9 +64,22 @@ function PopulationGraph(props) {
             
             </VictoryChart>
     </View>
-    );
+    )
+    else{
+        return(
+            <VictoryChart
+            theme={VictoryTheme.material}
+            domain={{ x: [0, grid_width], y: [0, grid_height] }}
+            height={width*0.85}
+            padding={{ top: height*0.01, bottom: height*0.11, left: width*0.1, right: width*0.05 }}
+            >
+            </VictoryChart>
+        )
+    }
+
 
 }
+
 
 export { PopulationGraph };
 
