@@ -23,5 +23,5 @@ app.get('*', function(request, response) {
 });
 
 app.listen(PORT, function () {
-  console.error(`Node ${isDev ? 'dev server' : 'cluster worker '+process.pid}: listening on port ${PORT}`);
+  console.error(`Server listening on port ${PORT}`);
 });

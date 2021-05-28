@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-prebuild": "cd IndraReactWeb && npm install && npm run build",
-    "start-web": "serve -s IndraReactWeb/build"
+    "start-web": "node index.js"
   },
   "repository": {
     "type": "git",
