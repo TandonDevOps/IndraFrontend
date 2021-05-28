@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/TandonDevOps/IndraFrontend#readme",
   "dependencies": {
-    "serve": "^11.3.2"
+    "express": "^4.17.1"
   }
 }
