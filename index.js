@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();  
 
 // Priority serve any static files.
-app.use(express.static(path.resolve(__dirname, INDRA_WEB_FRONTEND_FOLDER, BUILD_FOLDER)));
+const STATIC_BUILD_FOLDER = path.resolve(__dirname, INDRA_WEB_FRONTEND_FOLDER, BUILD_FOLDER);
+app.use(express.static(STATIC_BUILD_FOLDER));
 
 // Answer API requests.
 app.get('/api', function (req, res) {
@@ -19,7 +20,7 @@ app.get('/api', function (req, res) {
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, INDRA_WEB_FRONTEND_FOLDER, BUILD_FOLDER, 'index.html'));
+  response.sendFile('index.html', {root: STATIC_BUILD_FOLDER});
 });
 
 app.listen(PORT, function () {

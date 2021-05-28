@@ -1,7 +1,6 @@
 {
   "name": "indra",
   "version": "0.1.0",
-  "homepage": "https://tandondevops.github.io/IndraFrontend/",
   "private": true,
   "engines": {
     "node": "14.x"

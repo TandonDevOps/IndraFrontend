@@ -19,6 +19,9 @@ The web is hosted on the Github Page: https://tandondevops.github.io/IndraFronte
 * To install the required environment for web: `make dev_env_web`
 * To local host the web: `make web_start`
 
+## Deploying on heroku using sub-directory
+Make sure the package.json in your sub-directory does not contain an entry for "homepage".
+
 ## There are three main directories under the project root:
 
 1. `IndraReactCommon`: for common code between web and mobile apps.
