@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Frontend repo for Indra",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "cd IndraReactWeb && npm install && npm run deploy",
+    "heroku-prebuild": "cd IndraReactWeb && npm install && npm run build",
     "start-web": "serve -s IndraReactWeb/build"
   },
   "repository": {
