@@ -1,0 +1,24 @@
+{
+  "name": "indrafrontend",
+  "version": "1.0.0",
+  "description": "Frontend repo for Indra",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-prebuild": "cd IndraReactWeb && npm install && npm run deploy",
+    "start-web": "serve -s IndraReactWeb/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TandonDevOps/IndraFrontend.git"
+  },
+  "author": "Abhinav Sharma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TandonDevOps/IndraFrontend/issues"
+  },
+  "homepage": "https://github.com/TandonDevOps/IndraFrontend#readme",
+  "dependencies": {
+    "serve": "^11.3.2"
+  }
+}
