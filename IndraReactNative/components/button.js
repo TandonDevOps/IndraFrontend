@@ -9,7 +9,8 @@ function ButtonUseModel(props){
             style = {buttonStyle}
             onPress={() => {if (navigationPath[1].modelID > -1) {navigation.navigate(navigationPath[0], {
                 modelID: navigationPath[1].modelID, 
-                modelName: navigationPath[1].modelName
+                modelName: navigationPath[1].modelName,
+                modelGraph: navigationPath[1].modelGraph,
             })}else{
                 Alert.alert("Please choose a model");
             }}
@@ -33,6 +34,7 @@ function ButtonSubmitOptions(props){
                 modelParams: navigationPath[1], 
                 modelID: navigationPath[2],
                 modelName: navigationPath[3],
+                modelGraph: navigationPath[4],
                 })}>
             <Text style = {textStyle}>
                 Submit

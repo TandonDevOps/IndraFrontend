@@ -19,7 +19,12 @@ class Properties extends Component {
         super(props);
         const {route, navigation} = this.props;
         this.props_url = config.PROPS_URL;
-        this.state = { modelID : route.params.modelID, modelName: route.params.modelName, menuDetails : {}, loadingText : 'loading properties...', ready : false};
+        this.state = { modelID : route.params.modelID, 
+                       modelName: route.params.modelName, 
+                       modelGraph: route.params.modelGraph, 
+                       menuDetails : {}, 
+                       loadingText : 'loading properties...', 
+                       ready : false};
         this.props_url = config.PROPS_URL;
         this.goBackButtonText = "Menu";
         this.updateJson = this.updateJson.bind(this);
@@ -102,7 +107,7 @@ class Properties extends Component {
                 <ButtonSubmitOptions testID={mTestID}
                 textStyle={styles.buttonText}
                 buttonStyle={styles.button}
-                navigationPath={['ModelView', this.state.modelDetails, this.state.modelID, this.state.modelName] }
+                navigationPath={['ModelView', this.state.modelDetails, this.state.modelID, this.state.modelName, this.state.modelGraph] }
                 navigation={this.props.navigation}
                 />
                 

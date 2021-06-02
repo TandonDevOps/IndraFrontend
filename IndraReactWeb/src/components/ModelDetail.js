@@ -6,6 +6,10 @@ import PageLoader from './PageLoader';
 import './styles.css';
 import config from 'IndraReactCommon/config';
 
+const OK = 1
+const BAD_TYPE = -1
+const OUT_OF_RANGE = 0
+
 const apiServer = config.PROPS_URL;
 
 class ModelDetail extends Component {
@@ -46,12 +50,12 @@ class ModelDetail extends Component {
       if (state === undefined) {
       // this is undefined when someone tried to open the model in a new tab from the home screen.
         const menuId = parseInt(match.params.id, 10);
-        const modalDetails = JSON.parse(localStorage.getItem('indra_model_details')).filter((item) => item['model ID'] === menuId)[0];
+        const modelDetails = JSON.parse(localStorage.getItem('indra_model_details')).filter((item) => item['model ID'] === menuId)[0];
         initialState = {
           menuId,
-          name: modalDetails.name,
-          source: modalDetails.source,
-          graph: modalDetails.graph,
+          name: modelDetails.name,
+          source: modelDetails.source,
+          graph: modelDetails.graph,
         };
       } else {
         initialState = state;
@@ -108,12 +112,12 @@ class ModelDetail extends Component {
     const valid = this.checkValidity(name, value);
     modelDetails[name].disabledButton = true;
 
-    if (valid === 1) {
+    if (valid === OK) {
       modelDetails[name].val = parseInt(value, 10);
       modelDetails[name].errorMessage = '';
       modelDetails[name].disabledButton = false;
       this.setState({ modelDetails });
-    } else if (valid === -1) {
+    } else if (valid === BAD_TYPE) {
       modelDetails[name].errorMessage = '**Wrong Input Type';
       modelDetails[name].val = modelDetails[name].defaultVal;
       this.setState({ modelDetails });
@@ -135,15 +139,15 @@ class ModelDetail extends Component {
       && value >= modelDetails[name].lowval
     ) {
       if (modelDetails[name].atype === 'INT' && !!(value % 1) === false) {
-        return 1;
+        return OK;
       }
       if (modelDetails[name].atype === 'DBL') {
-        return 1;
+        return OK;
       }
 
-      return -1;
+      return BAD_TYPE;
     }
-    return 0;
+    return OUT_OF_RANGE;
   };
 
   handleSubmit = async (event) => {
