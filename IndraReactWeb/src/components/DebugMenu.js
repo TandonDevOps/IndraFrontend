@@ -6,7 +6,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 
-class DebugMenu extends Component {
+
+class DebugMenu extends Component { // from react
 
   constructor(props){
     super(props);
