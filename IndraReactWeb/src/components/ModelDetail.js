@@ -9,6 +9,7 @@ import config from 'IndraReactCommon/config';
 const OK = 1
 const BAD_TYPE = -1
 const OUT_OF_RANGE = 0
+const QUESTION = 'question'
 
 const apiServer = config.PROPS_URL;
 
@@ -17,7 +18,7 @@ class ModelDetail extends Component {
     super(props);
     const initialModelDetailState = this.getInitialModelDetails();
     this.state = {
-      modelDetails: {},
+      modelParams: {},
       loadingData: false,
       disabledButton: false,
       ...initialModelDetailState,
@@ -33,7 +34,7 @@ class ModelDetail extends Component {
       const properties = await axios.get(
         `${apiServer}${menuId}`,
       );
-      this.setState({ modelDetails: properties.data });
+      this.setState({ modelParams: properties.data });
       this.states(properties.data);
       this.errors(properties.data);
       this.setState({ loadingData: false });
@@ -50,12 +51,12 @@ class ModelDetail extends Component {
       if (state === undefined) {
       // this is undefined when someone tried to open the model in a new tab from the home screen.
         const menuId = parseInt(match.params.id, 10);
-        const modelDetails = JSON.parse(localStorage.getItem('indra_model_details')).filter((item) => item['model ID'] === menuId)[0];
+        const modelParams = JSON.parse(localStorage.getItem('indra_model_details')).filter((item) => item['model ID'] === menuId)[0];
         initialState = {
           menuId,
-          name: modelDetails.name,
-          source: modelDetails.source,
-          graph: modelDetails.graph,
+          name: modelParams.name,
+          source: modelParams.source,
+          graph: modelParams.graph,
         };
       } else {
         initialState = state;
@@ -67,29 +68,29 @@ class ModelDetail extends Component {
   }
 
   states = (data) => {
-    const { modelDetails } = this.state;
+    const { modelParams } = this.state;
     // loop over objects in data and create object in this.state
-    Object.keys(modelDetails).forEach((detailName) => {
+    Object.keys(modelParams).forEach((detailName) => {
       this.setState((prevState) => ({
-        modelDetails: {
-          ...prevState.modelDetails,
+        modelParams: {
+          ...prevState.modelParams,
           [detailName]: {
-            ...prevState.modelDetails[detailName],
+            ...prevState.modelParams[detailName],
             defaultVal: data[detailName].val,
           },
         },
       }));
-      // Object.keys(modelDetails).forEach((item) => this.setState({ [item]: data[item] }));
+      // Object.keys(modelParams).forEach((item) => this.setState({ [item]: data[item] }));
     });
   };
 
   errors = () => {
-    const { modelDetails } = this.state;
-    Object.keys(modelDetails).forEach((item) => this.setState((prevState) => ({
-      modelDetails: {
-        ...prevState.modelDetails,
+    const { modelParams } = this.state;
+    Object.keys(modelParams).forEach((item) => this.setState((prevState) => ({
+      modelParams: {
+        ...prevState.modelParams,
         [item]: {
-          ...prevState.modelDetails[item],
+          ...prevState.modelParams[item],
           errorMessage: '',
           disabledButton: false,
         },
@@ -98,50 +99,50 @@ class ModelDetail extends Component {
   };
 
   errorSubmit = () => {
-    const { modelDetails } = this.state;
+    const { modelParams } = this.state;
     let ans = false;
-    Object.keys(modelDetails).forEach((item) => {
-      ans = ans || modelDetails[item].disabledButton;
+    Object.keys(modelParams).forEach((item) => {
+      ans = ans || modelParams[item].disabledButton;
     });
     return ans;
   };
 
   propChanged = (e) => {
-    const { modelDetails } = this.state;
+    const { modelParams } = this.state;
     const { name, value } = e.target;
     const valid = this.checkValidity(name, value);
-    modelDetails[name].disabledButton = true;
+    modelParams[name].disabledButton = true;
 
     if (valid === OK) {
-      modelDetails[name].val = parseInt(value, 10);
-      modelDetails[name].errorMessage = '';
-      modelDetails[name].disabledButton = false;
-      this.setState({ modelDetails });
+      modelParams[name].val = parseInt(value, 10);
+      modelParams[name].errorMessage = '';
+      modelParams[name].disabledButton = false;
+      this.setState({ modelParams });
     } else if (valid === BAD_TYPE) {
-      modelDetails[name].errorMessage = '**Wrong Input Type';
-      modelDetails[name].val = modelDetails[name].defaultVal;
-      this.setState({ modelDetails });
+      modelParams[name].errorMessage = '**Wrong Input Type';
+      modelParams[name].val = modelParams[name].defaultVal;
+      this.setState({ modelParams });
     } else {
-      modelDetails[
+      modelParams[
         name
-      ].errorMessage = `**Please input a number between ${modelDetails[name].lowval} and ${modelDetails[name].hival}.`;
-      modelDetails[name].val = modelDetails[name].defaultVal;
-      this.setState({ modelDetails });
+      ].errorMessage = `**Please input a number between ${modelParams[name].lowval} and ${modelParams[name].hival}.`;
+      modelParams[name].val = modelParams[name].defaultVal;
+      this.setState({ modelParams });
     }
 
     this.setState({ disabledButton: this.errorSubmit() });
   };
 
   checkValidity = (name, value) => {
-    const { modelDetails } = this.state;
+    const { modelParams } = this.state;
     if (
-      value <= modelDetails[name].hival
-      && value >= modelDetails[name].lowval
+      value <= modelParams[name].hival
+      && value >= modelParams[name].lowval
     ) {
-      if (modelDetails[name].atype === 'INT' && !!(value % 1) === false) {
+      if (modelParams[name].atype === 'INT' && !!(value % 1) === false) {
         return OK;
       }
-      if (modelDetails[name].atype === 'DBL') {
+      if (modelParams[name].atype === 'DBL') {
         return OK;
       }
 
@@ -153,14 +154,14 @@ class ModelDetail extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const {
-      modelDetails, menuId, name, source, graph,
+      modelParams, menuId, name, source, graph,
     } = this.state;
     const { history } = this.props;
     try {
       // res gives us back the model returned from put props
       const res = await axios.put(
         apiServer + menuId,
-        modelDetails,
+        modelParams,
       );
       const itemId = menuId;
       const envFile = res.data;
@@ -210,7 +211,7 @@ class ModelDetail extends Component {
   };
 
   render() {
-    const { loadingData, modelDetails } = this.state;
+    const { loadingData, modelParams } = this.state;
     if (loadingData) {
       return <PageLoader />;
     }
@@ -222,14 +223,15 @@ class ModelDetail extends Component {
         <br />
         <form>
           <div className="container">
-            {Object.keys(modelDetails).map((item) => {
-              if ('question' in modelDetails[item]) {
+            {Object.keys(modelParams).map((item) => {
+              if (QUESTION in modelParams[item]
+                 && modelParams[item][QUESTION] != null) {
                 return (
                   <ModelInputField
-                    label={modelDetails[item].question}
-                    type={modelDetails[item].atype}
-                    placeholder={modelDetails[item].val}
-                    error={modelDetails[item].errorMessage}
+                    label={modelParams[item].question}
+                    type={modelParams[item].atype}
+                    placeholder={modelParams[item].val}
+                    error={modelParams[item].errorMessage}
                     propChange={this.propChanged}
                     name={item}
                     key={item}
