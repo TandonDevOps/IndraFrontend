@@ -7,7 +7,8 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 
-class DebugMenu extends Component {
+
+class DebugMenu extends Component { // from react
 
   constructor(props){
     super(props);
