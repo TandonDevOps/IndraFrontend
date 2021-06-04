@@ -5,6 +5,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
+import ErrorCatching from './ErrorCatching';
 
 class DebugMenu extends Component {
 
@@ -15,7 +16,8 @@ class DebugMenu extends Component {
     this.state = {
       menu: {},
       EXEC_KEY: location.pathname.substr(13),
-      activeDisplay: ''
+      activeDisplay: '',
+      serverError: false,
     };
   }
 
@@ -26,6 +28,9 @@ class DebugMenu extends Component {
         menu: menu.data
       })
     } catch (e) {
+      this.setState({
+        serverError: true,
+      });
       console.log(e);
     }
   }
@@ -80,6 +85,10 @@ class DebugMenu extends Component {
   };
 
   render() {
+    const { serverError } = this.state;
+    if (serverError) {
+      return <ErrorCatching />;
+    }
     return (
       <div>
         <h1 className="header">Debug menu</h1>

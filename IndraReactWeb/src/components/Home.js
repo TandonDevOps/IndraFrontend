@@ -12,6 +12,7 @@ import sandpile1Img from './images/sandpile_2.png';
 import mandelobrotImg from './images/mendelobrot_sq.jpg';
 import './styles.css';
 import axios from 'axios';
+import ErrorCatching from './ErrorCatching';
 
 //import { getModels } from 'IndraReactCommon/APICalls';
 import config from 'IndraReactCommon/config';
@@ -28,6 +29,7 @@ class Home extends Component {
         { image: sandpile1Img, title: 'by Colt Browninga' },
         { image: mandelobrotImg, title: 'by Adam Majewski' },
       ],
+      serverError: false,
     };
     this.api_server = config.API_URL;
   }
@@ -45,6 +47,9 @@ class Home extends Component {
       // in all tabs of a browser
       localStorage.setItem('indra_model_details', JSON.stringify(res.data));
     } catch (e) {
+      this.setState({
+        serverError: true,
+      });
       history.push('/errorCatching');
     }
   }
@@ -55,8 +60,11 @@ class Home extends Component {
 
   render() {
     const {
-      loadingData, dataForCarousel, allItems, apiFailed,
+      loadingData, dataForCarousel, allItems, apiFailed, serverError,
     } = this.state;
+    if (serverError) {
+      return <ErrorCatching />;
+    }
     if (apiFailed) {
       return <h1>404 Error</h1>;
     }

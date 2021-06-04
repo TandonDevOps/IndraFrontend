@@ -5,6 +5,7 @@ import PropType from 'prop-types';
 import CardWrapper from './CardWrapper';
 import axios from 'axios';
 import config from 'IndraReactCommon/config';
+import ErrorCatching from './ErrorCatching';
 
 const POPHIST_URL  = config.POPHIST_URL ;
 
@@ -13,8 +14,12 @@ function PopulationGraph(props) {
   const { loadingData, EXEC_KEY } = props;
   useEffect(() => {
     async function fetchPopHist() {
-      const res = await axios.get(`${POPHIST_URL}${EXEC_KEY}`);
-      setPopHist(res.data.pops);
+      try {
+        const res = await axios.get(`${POPHIST_URL}${EXEC_KEY}`);
+        setPopHist(res.data.pops);
+      } catch (e) {
+        return <ErrorCatching />;
+      }
     }
 
     fetchPopHist();

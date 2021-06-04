@@ -8,6 +8,7 @@ import PopulationGraph from './PopulationGraph';
 import ScatterPlot from './ScatterPlot';
 import ModelStatusBox from './ModelStatusBox';
 import RunModelButton from './RunModelButton';
+import ErrorCatching from './ErrorCatching';
 import './styles.css';
 import config from 'IndraReactCommon/config';
 
@@ -39,6 +40,7 @@ class ActionMenu extends Component {
       continuousRunDisabled: false,
       initLoading: true,
       EXEC_KEY: envFile.exec_key,
+      serverError: false,
     };
     autoBind(this);
   }
@@ -65,6 +67,9 @@ class ActionMenu extends Component {
         loadingData: false,
       });
     } catch (error) {
+      this.setState({
+        serverError: true,
+      });
       return false;
     }
     const defaultGraph = graph;
@@ -113,6 +118,9 @@ class ActionMenu extends Component {
       );
       return res.data;
     } catch (error) {
+      // this.setState({
+      //   serverError: true,
+      // });
       return 'Something has gone wrong.';
     }
   };
@@ -187,6 +195,9 @@ class ActionMenu extends Component {
       // return true;
     } catch (e) {
       // return false;
+      this.setState({
+        serverError: true,
+      });
     }
   };
 
@@ -300,14 +311,18 @@ class ActionMenu extends Component {
 
   render() {
     const {
-      loadingData, msg, disabledButton, errorMessage, initLoading, continuousRunDisabled,
+      loadingData, msg, disabledButton, errorMessage, initLoading, continuousRunDisabled, serverError,
     } = this.state;
+    if (serverError) {
+      return <ErrorCatching />;
+    }
     if (loadingData && initLoading) {
       return <PageLoader />;
     }
     // if (loadingData && !initLoading){
     //   return;
     // }
+   
     return (
       <div>
         {this.renderHeader()}

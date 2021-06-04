@@ -5,6 +5,7 @@ import ModelInputField from './ModelInputField';
 import PageLoader from './PageLoader';
 import './styles.css';
 import config from 'IndraReactCommon/config';
+import ErrorCatching from './ErrorCatching';
 
 const OK = 1
 const BAD_TYPE = -1
@@ -20,6 +21,7 @@ class ModelDetail extends Component {
       modelDetails: {},
       loadingData: false,
       disabledButton: false,
+      serverError: false,
       ...initialModelDetailState,
     };
   }
@@ -38,6 +40,9 @@ class ModelDetail extends Component {
       this.errors(properties.data);
       this.setState({ loadingData: false });
     } catch (e) {
+      this.setState({
+        serverError: true,
+      });
       history.push('/errorCatching');
     }
   }
@@ -176,6 +181,9 @@ class ModelDetail extends Component {
         },
       });
     } catch (e) {
+      this.setState({
+        serverError: true,
+      });
       history.push('/errorCatching');
     }
   };
@@ -210,7 +218,10 @@ class ModelDetail extends Component {
   };
 
   render() {
-    const { loadingData, modelDetails } = this.state;
+    const { loadingData, modelDetails, serverError } = this.state;
+    if (serverError) {
+      return <ErrorCatching />;
+    }
     if (loadingData) {
       return <PageLoader />;
     }
