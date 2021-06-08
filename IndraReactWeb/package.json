@@ -82,5 +82,6 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
-  }
+  },
+  "homepage": "https://github.com/TandonDevOps/IndraFrontend"
 }
