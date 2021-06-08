@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.83acbbd9.chunk.css",
-    "main.js": "/static/js/main.282067f1.chunk.js",
-    "main.js.map": "/static/js/main.282067f1.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.5b5bc262.js",
-    "runtime-main.js.map": "/static/js/runtime-main.5b5bc262.js.map",
-    "static/css/2.ea9ff7ac.chunk.css": "/static/css/2.ea9ff7ac.chunk.css",
-    "static/js/2.de86c677.chunk.js": "/static/js/2.de86c677.chunk.js",
-    "static/js/2.de86c677.chunk.js.map": "/static/js/2.de86c677.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.52fd32319b6f430692f9bf073c9c4952.js": "/precache-manifest.52fd32319b6f430692f9bf073c9c4952.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.ea9ff7ac.chunk.css.map": "/static/css/2.ea9ff7ac.chunk.css.map",
-    "static/css/main.83acbbd9.chunk.css.map": "/static/css/main.83acbbd9.chunk.css.map",
-    "static/js/2.de86c677.chunk.js.LICENSE.txt": "/static/js/2.de86c677.chunk.js.LICENSE.txt",
-    "static/media/Sandpile.jpg": "/static/media/Sandpile.090bc1a0.jpg",
-    "static/media/mendelobrot_sq.jpg": "/static/media/mendelobrot_sq.875dd8b8.jpg",
-    "static/media/sandpile_2.png": "/static/media/sandpile_2.d38b3fb1.png",
-    "static/media/slick-theme.css": "/static/media/slick.f97e3bbf.svg"
+    "main.css": "/TandonDevOps/IndraFrontend/static/css/main.83acbbd9.chunk.css",
+    "main.js": "/TandonDevOps/IndraFrontend/static/js/main.7c6589ad.chunk.js",
+    "main.js.map": "/TandonDevOps/IndraFrontend/static/js/main.7c6589ad.chunk.js.map",
+    "runtime-main.js": "/TandonDevOps/IndraFrontend/static/js/runtime-main.46b15260.js",
+    "runtime-main.js.map": "/TandonDevOps/IndraFrontend/static/js/runtime-main.46b15260.js.map",
+    "static/css/2.8ff62c29.chunk.css": "/TandonDevOps/IndraFrontend/static/css/2.8ff62c29.chunk.css",
+    "static/js/2.f640adef.chunk.js": "/TandonDevOps/IndraFrontend/static/js/2.f640adef.chunk.js",
+    "static/js/2.f640adef.chunk.js.map": "/TandonDevOps/IndraFrontend/static/js/2.f640adef.chunk.js.map",
+    "index.html": "/TandonDevOps/IndraFrontend/index.html",
+    "precache-manifest.0822a141d310a501255147d72bce6bd8.js": "/TandonDevOps/IndraFrontend/precache-manifest.0822a141d310a501255147d72bce6bd8.js",
+    "service-worker.js": "/TandonDevOps/IndraFrontend/service-worker.js",
+    "static/css/2.8ff62c29.chunk.css.map": "/TandonDevOps/IndraFrontend/static/css/2.8ff62c29.chunk.css.map",
+    "static/css/main.83acbbd9.chunk.css.map": "/TandonDevOps/IndraFrontend/static/css/main.83acbbd9.chunk.css.map",
+    "static/js/2.f640adef.chunk.js.LICENSE.txt": "/TandonDevOps/IndraFrontend/static/js/2.f640adef.chunk.js.LICENSE.txt",
+    "static/media/Sandpile.jpg": "/TandonDevOps/IndraFrontend/static/media/Sandpile.090bc1a0.jpg",
+    "static/media/mendelobrot_sq.jpg": "/TandonDevOps/IndraFrontend/static/media/mendelobrot_sq.875dd8b8.jpg",
+    "static/media/sandpile_2.png": "/TandonDevOps/IndraFrontend/static/media/sandpile_2.d38b3fb1.png",
+    "static/media/slick-theme.css": "/TandonDevOps/IndraFrontend/static/media/slick.f97e3bbf.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.5b5bc262.js",
-    "static/css/2.ea9ff7ac.chunk.css",
-    "static/js/2.de86c677.chunk.js",
+    "static/js/runtime-main.46b15260.js",
+    "static/css/2.8ff62c29.chunk.css",
+    "static/js/2.f640adef.chunk.js",
     "static/css/main.83acbbd9.chunk.css",
-    "static/js/main.282067f1.chunk.js"
+    "static/js/main.7c6589ad.chunk.js"
   ]
 }
