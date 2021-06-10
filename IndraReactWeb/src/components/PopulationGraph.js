@@ -50,7 +50,7 @@ function PopulationGraph(props) {
     });
     return (
       <CardWrapper title="Population Graph">
-        <LineChart data={data} width="600px" height="600px" />
+        <LineChart data={data} width="600px" height="600px" xtitle="Period" ytitle="Population" />
       </CardWrapper>
     );
   }
