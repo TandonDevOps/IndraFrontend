@@ -15,9 +15,6 @@ tests: lint jstests
 install:
 	npm install
 
-web:
-	npm start
-
 lint:
 	$(JSLINT) $(JSFILES)
 

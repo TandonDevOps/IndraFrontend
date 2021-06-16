@@ -169,12 +169,12 @@ class ModelDetail extends Component {
         modelParams,
       );
       const itemId = menuId;
-      const envFile = res.data;
+      const environ = res.data;
       const execKey = res.data.exec_key;
       history.push({
         pathname: `/models/menu/${itemId.toString(10)}`,
         state: {
-          envFile,
+          environ,
           name,
           source,
           graph,

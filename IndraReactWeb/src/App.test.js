@@ -64,7 +64,7 @@ describe('<App/>', () => {
         <MemoryRouter initialEntries={[{
           pathname: '/models/props/2',
           state: {
-            menuId: 2, name: 'test_name', source: 'test_source', graph: 'test_graph', envFile: { execution_key: CLI_EXEC_KEY },
+            menuId: 2, name: 'test_name', source: 'test_source', graph: 'test_graph', environ: { execution_key: CLI_EXEC_KEY },
           },
         }]}
         >
@@ -81,7 +81,7 @@ describe('<App/>', () => {
 
     it('ActionMenu route renders <ActionMenu/> component', () => {
       const component = mount(
-        <MemoryRouter initialEntries={[{ pathname: `/models/menu/${CLI_EXEC_KEY}`, state: { envFile: { execution_key: CLI_EXEC_KEY } } }]}>
+        <MemoryRouter initialEntries={[{ pathname: `/models/menu/${CLI_EXEC_KEY}`, state: { environ: { execution_key: CLI_EXEC_KEY } } }]}>
           <IndraRoutes />
         </MemoryRouter>,
       );

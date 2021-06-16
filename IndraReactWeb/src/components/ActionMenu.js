@@ -24,11 +24,11 @@ class ActionMenu extends Component {
     super(props);
     const { location } = this.props;
     const { state } = location;
-    const { envFile } = state;
+    const { environ } = state;
     this.state = {
       menu: {},
       loadingData: true,
-      envFile: {},
+      environ: {},
       source: '',
       periodNum: 10,
       errorMessage: '',
@@ -39,7 +39,7 @@ class ActionMenu extends Component {
       continuousRun: true,
       continuousRunDisabled: false,
       initLoading: true,
-      EXEC_KEY: envFile.exec_key,
+      EXEC_KEY: environ.exec_key,
       serverError: false,
     };
     autoBind(this);
@@ -49,7 +49,7 @@ class ActionMenu extends Component {
     const { location } = this.props;
     const { state } = location;
     const {
-      envFile, name, source, graph,
+      environ, name, source, graph,
     } = state;
     try {
       document.title = 'Indra | Menu';
@@ -61,9 +61,9 @@ class ActionMenu extends Component {
         menu: m.data,
         name,
         source,
-        envFile,
+        environ,
         graph,
-        // msg: envFile.user.user_msgs,
+        // msg: environ.user.user_msgs,
         loadingData: false,
       });
     } catch (error) {
@@ -177,18 +177,18 @@ class ActionMenu extends Component {
   };
 
   sendNumPeriods = async () => {
-    const { periodNum, envFile, EXEC_KEY } = this.state;
-    const envFileWithExecutionKey = { ...envFile, execution_key: EXEC_KEY };
+    const { periodNum, environ, EXEC_KEY } = this.state;
+    const environWithExecutionKey = { ...environ, execution_key: EXEC_KEY };
     this.setState({ loadingData: true });
     try {
       const res = await axios.put(
         `${config.API_URL}models/run/${String(periodNum)}`,
-        envFileWithExecutionKey,
+        environWithExecutionKey,
         periodNum,
       );
       const msgData = await axios.get(`${USER_MSGS_URL}${EXEC_KEY}`);
       this.setState({
-        envFile: res.data,
+        environ: res.data,
         loadingData: false,
         msg: msgData.data,
       });
@@ -276,7 +276,7 @@ class ActionMenu extends Component {
 
   renderMenuItem = () => {
     const {
-      envFile,
+      environ,
       loadingPopulation,
       loadingScatter,
       EXEC_KEY
@@ -284,7 +284,7 @@ class ActionMenu extends Component {
     return (
       <div className="mt-5">
         <PopulationGraph loadingData={loadingPopulation} EXEC_KEY={EXEC_KEY} />
-        <ScatterPlot loadingData={loadingScatter} envFile={envFile} />
+        <ScatterPlot loadingData={loadingScatter} environ={environ} />
       </div>
     );
   };
@@ -371,7 +371,7 @@ class ActionMenu extends Component {
 ActionMenu.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
-      envFile: PropTypes.object,
+      environ: PropTypes.object,
       name: PropTypes.string,
       source: PropTypes.string,
       graph: PropTypes.string,
@@ -384,7 +384,7 @@ ActionMenu.propTypes = {
 ActionMenu.defaultProps = {
   location: {
     state: {
-      envFile: {},
+      environ: {},
     },
   },
   history: {},

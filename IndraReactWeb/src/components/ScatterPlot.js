@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import CardWrapper from './CardWrapper';
 
 function ScatterPlot(props) {
-  const { loadingData, envFile, id } = props;
+  const { loadingData, environ, id } = props;
   const pointStyles = [
     'circle',
     'cross',
@@ -28,7 +28,7 @@ function ScatterPlot(props) {
     default: 'circle',
   };
   if (loadingData) {
-    const env = envFile.env.members;
+    const env = environ.env.members;
     const data = [];
     const dataset = {
       pointStyle: 'circle',
@@ -60,13 +60,13 @@ function ScatterPlot(props) {
 
 ScatterPlot.propTypes = {
   loadingData: PropTypes.bool,
-  envFile: PropTypes.shape(),
+  environ: PropTypes.shape(),
   id: PropTypes.number,
 };
 
 ScatterPlot.defaultProps = {
   loadingData: true,
-  envFile: {},
+  environ: {},
   id: 0,
 };
 

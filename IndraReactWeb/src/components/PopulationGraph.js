@@ -37,8 +37,8 @@ function PopulationGraph(props) {
       data.push({
         name: group,
         color: colors[thisColor % NUM_COLORS],
-        //color: envFile.members[group]
-          //? envFile.members[group].attrs.color : colors[thisColor % NUM_COLORS],
+        //color: environ.members[group]
+          //? environ.members[group].attrs.color : colors[thisColor % NUM_COLORS],
         data: {},
       });
       // modify individual 'data' dictionary of each pops

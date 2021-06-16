@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CardWrapper from './CardWrapper';
 
-const LogsViewer = ({ loadingData, envFile }) => {
+const LogsViewer = ({ loadingData, environ }) => {
   if (!loadingData) return null;
   return (
     <CardWrapper title="Logs">
       <div style={{ whiteSpace: 'pre-line' }}>
-        {envFile.user.debug || 'Run the model to see the logs'}
+        {environ.user.debug || 'Run the model to see the logs'}
       </div>
     </CardWrapper>
   );
@@ -15,12 +15,12 @@ const LogsViewer = ({ loadingData, envFile }) => {
 
 LogsViewer.propTypes = {
   loadingData: PropTypes.bool,
-  envFile: PropTypes.shape(),
+  environ: PropTypes.shape(),
 };
 
 LogsViewer.defaultProps = {
   loadingData: true,
-  envFile: {},
+  environ: {},
 };
 
 export default LogsViewer;

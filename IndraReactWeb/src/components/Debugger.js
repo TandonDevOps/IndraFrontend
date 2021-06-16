@@ -4,8 +4,8 @@ import propTypes from 'prop-types';
 import CardWrapper from './CardWrapper';
 
 function Debugger(props) {
-  const { envFile, loadingData } = props;
-  const data = envFile;
+  const { environ, loadingData } = props;
+  const data = environ;
   if (loadingData) {
     return (
       <CardWrapper title="Model Data">
@@ -17,12 +17,12 @@ function Debugger(props) {
 }
 
 Debugger.propTypes = {
-  envFile: propTypes.shape(),
+  environ: propTypes.shape(),
   loadingData: propTypes.bool,
 };
 
 Debugger.defaultProps = {
-  envFile: {},
+  environ: {},
   loadingData: true,
 };
 

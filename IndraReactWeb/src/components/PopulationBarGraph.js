@@ -17,18 +17,18 @@ function PopulationBarGraph(props) {
   ];
   let thisColor = 0;
   let dataset = [];
-  const { loadingData, envFile } = props;
+  const { loadingData, environ } = props;
   if (loadingData) {
     const data = [];
-    const env = props.envFile.pop_hist.pops;
+    const env = props.environ.pop_hist.pops;
     // populate 'data' array with groups from 'pops'
     // and their respective values
     Object.keys(env).forEach((group, iGroup) => {
       data.push({
         name: group,
         // color: colors[thisColor % NUM_COLORS],
-        color: envFile.members[group]
-          ? envFile.members[group].attrs.color
+        color: environ.members[group]
+          ? environ.members[group].attrs.color
           : colors[thisColor % NUM_COLORS],
         data: {},
       });
@@ -56,12 +56,12 @@ function PopulationBarGraph(props) {
 
 PopulationBarGraph.propTypes = {
   loadingData: PropType.bool,
-  envFile: PropType.shape(),
+  environ: PropType.shape(),
 };
 
 PopulationBarGraph.defaultProps = {
   loadingData: true,
-  envFile: {},
+  environ: {},
 };
 
 export default PopulationBarGraph;
