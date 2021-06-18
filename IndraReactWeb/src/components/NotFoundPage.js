@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import PropTypes from 'prop-types';
+import Heading from './Heading';
 
 import './NotFoundPage.css';
 
@@ -16,7 +17,10 @@ const Status = ({ code, children }) => (
 const NotFoundPage = () => (
   <Status code={404}>
     <div className="NotFoundPage">
-      <h1>Oops!</h1>
+      <Heading
+        sectionLevel={"h1"}
+        text={"Oops!"}
+      />
       <div>Page not found.</div>
       <div className="action">
         <a className="btn btn-primary" href="/">

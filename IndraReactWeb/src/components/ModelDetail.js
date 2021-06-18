@@ -7,6 +7,7 @@ import './styles.css';
 import config from 'IndraReactCommon/config';
 import ErrorCatching from './ErrorCatching';
 import Button from './Button';
+import Heading from './Heading';
 
 const OK = 1
 const BAD_TYPE = -1
@@ -193,9 +194,12 @@ class ModelDetail extends Component {
   renderHeader = () => {
     const { name } = this.state;
     return (
-      <h1 className="header" style={{ textAlign: 'center', fontWeight: '200' }}>
-        {`Please set the parameters for the ${name} model`}
-      </h1>
+      <Heading
+        sectionLevel={"h1"}
+        className={"header"}
+        style={{ textAlign: 'center', fontWeight: '200' }}
+        text={`Please set the parameters for the ${name} model`}
+      />
     );
   };
 
@@ -228,7 +232,10 @@ class ModelDetail extends Component {
     }
     return (
       <div>
-        <h1 className="margin-top-60"> </h1>
+        <Heading
+          sectionLevel={"h1"}
+          className={"margin-top-60"}
+        />
         {this.renderHeader()}
         <br />
         <br />

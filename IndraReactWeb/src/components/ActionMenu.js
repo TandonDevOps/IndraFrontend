@@ -10,6 +10,7 @@ import ModelStatusBox from './ModelStatusBox';
 import RunModelButton from './RunModelButton';
 import ErrorCatching from './ErrorCatching';
 import Button from './Button';
+import Heading from './Heading';
 import './styles.css';
 import config from 'IndraReactCommon/config';
 
@@ -240,7 +241,11 @@ class ActionMenu extends Component {
 
   renderHeader = () => {
     const { name } = this.state;
-    return <h1 className="header">{name}</h1>;
+    return <Heading 
+      sectionLevel={"h1"} 
+      className={"header"} 
+      text={name}
+    />;
   };
 
   MenuItem = (id, action, text) => {
@@ -356,7 +361,11 @@ class ActionMenu extends Component {
                 className={"btn btn-danger m-2"}
                 text={"Stop"}
               />
-              <h3 className="margin-top-50 mb-4">Model Analysis:</h3>
+              <Heading 
+                sectionLevel={"h3"} 
+                className={"margin-top-50 mb-4"} 
+                text={"Model Analysis:"}
+              />
             </div>
           </div>
           {this.renderMapItem()}

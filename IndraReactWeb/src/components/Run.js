@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Loader, Dimmer } from 'semantic-ui-react';
+import Heading from './Heading';
 
 class Run extends Component {
   constructor(props) {
@@ -28,9 +29,11 @@ class Run extends Component {
     return (
       <div>
         <br />
-        <h1 style={{ textAlign: 'center' }}>
-          Welcome to the Indra ABM platform!
-        </h1>
+        <Heading
+          sectionLevel={"h1"}
+          style={{ textAlign: 'center' }}
+          text={"Welcome to the Indra ABM platform!"}
+        />
         <br />
         <br />
         <p>We will have this model running soon!</p>

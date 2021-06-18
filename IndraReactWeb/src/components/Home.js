@@ -13,6 +13,7 @@ import mandelobrotImg from './images/mendelobrot_sq.jpg';
 import './styles.css';
 import axios from 'axios';
 import ErrorCatching from './ErrorCatching';
+import Heading from './Heading';
 
 //import { getModels } from 'IndraReactCommon/APICalls';
 import config from 'IndraReactCommon/config';
@@ -55,7 +56,11 @@ class Home extends Component {
   }
 
   renderChooseModelProp = () => (
-    <h1 className="small-header">Please choose a model: </h1>
+    <Heading
+      sectionLevel={"h1"}
+      className={"small-header"}
+      text={"Please choose a model: "}
+    />
   );
 
   render() {
@@ -66,7 +71,10 @@ class Home extends Component {
       return <ErrorCatching />;
     }
     if (apiFailed) {
-      return <h1>404 Error</h1>;
+      return <Heading
+        sectionLevel={"h1"}
+        text={"404 Error"}
+      />;
     }
     if (loadingData) {
       return (
@@ -78,7 +86,11 @@ class Home extends Component {
     return (
       <div className="container">
         <div className="margin-bottom-80">
-          <h1 className="text-left">Indra Agent-Based Modeling System</h1>
+          <Heading
+            sectionLevel={"h1"}
+            className={"text-left"}
+            text={"Indra Agent-Based Modeling System"}
+          />
         </div>
         <div className="row">
           <Col sm={12} lg={4} className="mb-5">

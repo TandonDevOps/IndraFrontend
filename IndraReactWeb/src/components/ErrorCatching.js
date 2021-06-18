@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Loader, Dimmer } from 'semantic-ui-react';
+import Heading from './Heading';
 
 class ErrorCatching extends Component {
   constructor(props) {
@@ -28,9 +29,11 @@ class ErrorCatching extends Component {
     return (
       <div>
         <br />
-        <h1 style={{ textAlign: 'center' }}>
-          Indra ABM platform
-        </h1>
+        <Heading 
+          sectionLevel={"h1"} 
+          style={{ textAlign: 'center' }} 
+          text={"Indra ABM platform"}
+        />
         <br />
         <br />
         <p>

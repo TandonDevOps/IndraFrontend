@@ -1,15 +1,16 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import propTypes from 'prop-types';
+import Heading from './Heading';
 
 const CardWrapper = ({ title, children }) => (
   <Card>
-    <h5
+    <Heading 
+      sectionLevel={"h5"}
       style={{ textAlign: 'center', fontSize: 16 }}
-      className="card-header bg-primary text-white"
-    >
-      {title}
-    </h5>
+      className={"card-header bg-primary text-white"}
+      text={title}
+    />
     <Card.Body>{children}</Card.Body>
   </Card>
 );

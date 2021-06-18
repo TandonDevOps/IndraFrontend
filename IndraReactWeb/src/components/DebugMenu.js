@@ -6,6 +6,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
+import Heading from './Heading';
 
 
 class DebugMenu extends Component { // from react
@@ -92,7 +93,11 @@ class DebugMenu extends Component { // from react
     }
     return (
       <div>
-        <h1 className="header">Debug menu</h1>
+        <Heading 
+          sectionLevel={"h1"} 
+          className={"header"} 
+          text={"Debug menu"}
+        />
         <div>
         </div>
         <ul className="list-group">

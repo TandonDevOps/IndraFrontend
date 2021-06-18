@@ -1,6 +1,7 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 import PropTypes from 'prop-types';
+import Heading from './Heading';
 
 export default class ModelStatusBox extends React.Component {
   constructor(props) {
@@ -25,12 +26,12 @@ export default class ModelStatusBox extends React.Component {
     return (
       <div>
         <div className="card w-50 model-status">
-          <h5
+          <Heading
+            sectionLevel={"h5"}
             style={{ textAlign: 'center', fontSize: 16 }}
-            className="card-header bg-primary text-white"
-          >
-            { title }
-          </h5>
+            className={"card-header bg-primary text-white"}
+            text={title}
+          />
           <div className="card-body overflow-auto">
             <pre className="card-text">
               { msg }
