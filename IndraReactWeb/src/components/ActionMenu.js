@@ -9,6 +9,7 @@ import ScatterPlot from './ScatterPlot';
 import ModelStatusBox from './ModelStatusBox';
 import RunModelButton from './RunModelButton';
 import ErrorCatching from './ErrorCatching';
+import Button from './Button';
 import './styles.css';
 import config from 'IndraReactCommon/config';
 
@@ -343,20 +344,18 @@ class ActionMenu extends Component {
                 handleRunPeriod={this.handleRunPeriod}
               />
               {/* eslint-disable */}
-              <button
+              <Button
                 onClick={this.continuousRun}
                 disabled={continuousRunDisabled}
-                className="btn btn-success m-2"
-              >
-                Continuous Run
-              </button>
+                className={"btn btn-success m-2"}
+                text={"Continuous Run"}
+              />
               {/* eslint-disable */}
-              <button
+              <Button
                 onClick={this.stopRun}
-                className="btn btn-danger m-2"
-              >
-                Stop
-              </button>
+                className={"btn btn-danger m-2"}
+                text={"Stop"}
+              />
               <h3 className="margin-top-50 mb-4">Model Analysis:</h3>
             </div>
           </div>

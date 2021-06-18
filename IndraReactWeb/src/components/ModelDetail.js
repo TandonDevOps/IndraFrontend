@@ -6,6 +6,7 @@ import PageLoader from './PageLoader';
 import './styles.css';
 import config from 'IndraReactCommon/config';
 import ErrorCatching from './ErrorCatching';
+import Button from './Button';
 
 const OK = 1
 const BAD_TYPE = -1
@@ -202,14 +203,13 @@ class ModelDetail extends Component {
     const { disabledButton } = this.state;
     // console.log(this.state);
     return (
-      <button
-        type="button"
-        disabled={disabledButton}
+      <Button
+        type={"button"}
         onClick={!disabledButton ? this.handleSubmit : null}
-        className="btn btn-primary m-2"
-      >
-        Submit
-      </button>
+        disabled={disabledButton}
+        className={"btn btn-primary m-2"}
+        text={"Submit"}
+      />
     );
   };
 
