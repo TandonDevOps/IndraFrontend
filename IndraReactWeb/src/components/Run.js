@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Heading from './Heading';
+import Paragraph from './Paragraph';
 
 class Run extends Component {
   constructor(props) {
@@ -36,7 +37,9 @@ class Run extends Component {
         />
         <br />
         <br />
-        <p>We will have this model running soon!</p>
+        <Paragraph
+          text = {"We will have this model running soon!"}
+        />
         <br />
         <br />
       </div>
