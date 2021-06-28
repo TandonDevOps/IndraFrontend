@@ -16,7 +16,7 @@ const QUESTION = 'question'
 
 const apiServer = config.PROPS_URL;
 
-class ModelDetail extends Component {
+class ModelParams extends Component {
   constructor(props) {
     super(props);
     const initialModelDetailState = this.getInitialModelDetails();
@@ -268,7 +268,7 @@ class ModelDetail extends Component {
   }
 }
 
-ModelDetail.propTypes = {
+ModelParams.propTypes = {
   history: PropTypes.shape(),
   location: PropTypes.shape({
     state: PropTypes.shape({
@@ -285,7 +285,7 @@ ModelDetail.propTypes = {
   }),
 };
 
-ModelDetail.defaultProps = {
+ModelParams.defaultProps = {
   history: {},
   location: {
     state: {},
@@ -297,4 +297,4 @@ ModelDetail.defaultProps = {
   },
 };
 
-export default ModelDetail;
+export default ModelParams;

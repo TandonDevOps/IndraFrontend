@@ -56,7 +56,7 @@ class RunModel extends Component {
     try {
       document.title = 'Indra | Menu';
       // you need to pass the execution key that you get from put_props
-      // which is in ModelDetail, the current execution key is undefined
+      // which is in ModelParams, the current execution key is undefined
       const m = await axios.get(`${MENU_URL}`);
       // debugger;
       this.setState({

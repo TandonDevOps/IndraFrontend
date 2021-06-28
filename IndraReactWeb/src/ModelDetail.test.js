@@ -6,21 +6,21 @@ import { create } from 'react-test-renderer';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import ModelDetail from './components/ModelDetail';
+import ModelParams from './components/ModelParams';
 
 it('test case to pass', () => {
   expect(1).toEqual(1);
 });
 
-// describe('ModelDetail Component', () => {
+// describe('ModelParams Component', () => {
 //   it('has an h2 tag', () => {
-//     const component = shallow(<ModelDetail />);
+//     const component = shallow(<ModelParams />);
 //     const node = component.find('h2');
 //     expect(node.length).toEqual(1);
 //   });
 
 //   it('has an h3 tag', () => {
-//     const component = shallow(<ModelDetail />);
+//     const component = shallow(<ModelParams />);
 //     const node = component.find('h3');
 //     expect(node.length).toEqual(1);
 //   });
@@ -45,9 +45,9 @@ it('test case to pass', () => {
 // });
 
 
-// describe('ModelDetail component', () => {
+// describe('ModelParams component', () => {
 //   it('change loadingData state after componentDidMount', async () => {
-//     const component = mount(<ModelDetail />);
+//     const component = mount(<ModelParams />);
 //     const instance = component.getInstance();
 //     await instance.componentDidMount();
 //     expect(instance.state.loadingData).toBe(false);
