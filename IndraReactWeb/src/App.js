@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import WIP from './components/WIP';
 import ModelDetail from './components/ModelDetail';
-import ActionMenu from './components/ActionMenu';
+import RunModel from './components/RunModel';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorCatching from './components/ErrorCatching';
 import DebugMenu from './components/DebugMenu';
@@ -39,7 +39,7 @@ export function IndraRoutes() {
       <Route exact path="/" component={Home} />
       <Route exact path="/wip" component={WIP} />
       <Route exact path="/models/props/:id" component={ModelDetail} />
-      <Route exact path="/models/menu/:id" component={ActionMenu} />
+      <Route exact path="/models/menu/:id" component={RunModel} />
       <Route exact path="/models/debug/:exec_key" component={DebugMenu} />
       <Route exact path="/errorCatching" component={ErrorCatching} />
       <Route component={NotFoundPage} />

@@ -21,7 +21,7 @@ const MENU_URL = config.MENU_URL;
 const CLEAR_REGISTRY_URL = config.CLEAR_REGISTRY_URL;
 const USER_MSGS_URL = config.USER_MSGS_URL;
 
-class ActionMenu extends Component {
+class RunModel extends Component {
   constructor(props) {
     super(props);
     const { location } = this.props;
@@ -376,7 +376,7 @@ class ActionMenu extends Component {
   }
 }
 
-ActionMenu.propTypes = {
+RunModel.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       environ: PropTypes.object,
@@ -389,7 +389,7 @@ ActionMenu.propTypes = {
   history: PropTypes.object,
 };
 
-ActionMenu.defaultProps = {
+RunModel.defaultProps = {
   location: {
     state: {
       environ: {},
@@ -398,4 +398,4 @@ ActionMenu.defaultProps = {
   history: {},
 };
 
-export default ActionMenu;
+export default RunModel;
