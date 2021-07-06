@@ -248,7 +248,7 @@ class RunModel extends Component {
     />;
   };
 
-  MenuItem = (id, action, text) => {
+  ModelAnalysisMenuItem = (id, action, text) => {
     /**
      * All models will have all the menu items appear on the page.
      * However, we keep one of the graphs (Population graph or Scatter plot)
@@ -280,7 +280,7 @@ class RunModel extends Component {
     );
   };
 
-  renderMenuItem = () => {
+  renderGraph = () => {
     const {
       environ,
       loadingPopulation,
@@ -295,7 +295,7 @@ class RunModel extends Component {
     );
   };
 
-  renderMapItem = () => {
+  renderModelAnalysisMenu = () => {
     const { menu } = this.state;
     return (
       <div className="row margin-bottom-80">
@@ -303,7 +303,7 @@ class RunModel extends Component {
           <ListGroup>
             {Object.keys(menu).map((id) => (
             parseInt(id) > 1
-              ? this.MenuItem(
+              ? this.ModelAnalysisMenuItem(
                 id,
                 parseInt(id),
                 menu[id].question
@@ -315,9 +315,62 @@ class RunModel extends Component {
     );
   };
 
+  renderModelStatus = () => {
+    const { msg } = this.state;
+    return (
+      <div>
+          <ModelStatusBox
+            title="Model Status"
+            msg={msg}
+            ref={this.modelStatusBoxElement}
+          />
+        </div>
+    )
+  }
+
+  renderRunButtons = () => {
+    const { disabledButton, errorMessage, continuousRunDisabled } = this.state
+    return (
+        <div>
+          <RunModelButton
+            disabledButton={disabledButton}
+            errorMessage={errorMessage}
+            sendNumPeriods={this.sendNumPeriods}
+            handleRunPeriod={this.handleRunPeriod}
+          />
+          {/* eslint-disable */}
+          <Button
+            onClick={this.continuousRun}
+            disabled={continuousRunDisabled}
+            className={"btn btn-success m-2"}
+            text={"Continuous Run"}
+          />
+          {/* eslint-disable */}
+          <Button
+            onClick={this.stopRun}
+            className={"btn btn-danger m-2"}
+            text={"Stop"}
+          />
+        </div>
+    )
+  }
+
+  renderModelAnalysis = () => {
+    return (
+      <div>
+        <Heading 
+          sectionLevel={"h3"} 
+          className={"margin-top-50 mb-4"} 
+          text={"Model Analysis:"}
+        />
+        {this.renderModelAnalysisMenu()}
+      </div>
+    )
+  }
+
   render() {
     const {
-      loadingData, msg, disabledButton, errorMessage, initLoading, continuousRunDisabled, serverError,
+      loadingData, initLoading, serverError,
     } = this.state;
     if (serverError) {
       return <ErrorCatching />;
@@ -332,45 +385,12 @@ class RunModel extends Component {
     return (
       <div>
         {this.renderHeader()}
-        <div>
-          <ModelStatusBox
-            title="Model Status"
-            msg={msg}
-            ref={this.modelStatusBoxElement}
-          />
-        </div>
+        {this.renderModelStatus()}
         <ul className="list-group">
-          <div className="row">
-            <div>
-              <RunModelButton
-                disabledButton={disabledButton}
-                errorMessage={errorMessage}
-                sendNumPeriods={this.sendNumPeriods}
-                handleRunPeriod={this.handleRunPeriod}
-              />
-              {/* eslint-disable */}
-              <Button
-                onClick={this.continuousRun}
-                disabled={continuousRunDisabled}
-                className={"btn btn-success m-2"}
-                text={"Continuous Run"}
-              />
-              {/* eslint-disable */}
-              <Button
-                onClick={this.stopRun}
-                className={"btn btn-danger m-2"}
-                text={"Stop"}
-              />
-              <Heading 
-                sectionLevel={"h3"} 
-                className={"margin-top-50 mb-4"} 
-                text={"Model Analysis:"}
-              />
-            </div>
-          </div>
-          {this.renderMapItem()}
+            {this.renderRunButtons()}
+            {this.renderModelAnalysis()}
         </ul>
-        {this.renderMenuItem()}
+        {this.renderGraph()}
       </div>
     );
   }
