@@ -46,7 +46,7 @@ export function IndraRoutes() {
       <Route exact path="/wip" component={WIP} />
       <Route exact path="/models/props/:id" component={ModelParams} />
       <Route exact path="/models/menu/:id" component={RunModel} />
-      <Route exact path="/models/debug/:exec_key" component={DebugMenu} />
+      <Route exact path="/models/debug/:id" component={DebugMenu} />
       <Route exact path="/errorCatching" component={ErrorCatching} />
       <Route component={NotFoundPage} />
     </Switch>

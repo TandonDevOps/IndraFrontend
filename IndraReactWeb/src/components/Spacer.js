@@ -19,7 +19,7 @@ export default class Spacer extends React.Component {
       className, text, type,
     } = this.state;
     return (
-      <div>
+      <div
           className = {className}
           type={type}
         >

@@ -7,6 +7,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
+import Source from './Source';
 
 
 class DebugMenu extends Component { // from react
@@ -17,7 +18,7 @@ class DebugMenu extends Component { // from react
     this.debug_url = config.DEBUG_URL;
     this.state = {
       menu: {},
-      EXEC_KEY: location.pathname.substr(13),
+      modelID: location.pathname.substr(13),
       activeDisplay: '',
       serverError: false,
     };
@@ -58,6 +59,7 @@ class DebugMenu extends Component { // from react
         active = {activeDisplay === id}
         onClick={() => {
           this.handleClick(id);
+          console.log(id);
         }}
       >
         {text}
@@ -87,9 +89,12 @@ class DebugMenu extends Component { // from react
   };
 
   render() {
-    const { serverError } = this.state;
+    const { modelID, serverError, activeDisplay } = this.state;
     if (serverError) {
       return <ErrorCatching />;
+    }
+    if (activeDisplay === '2') {
+      return <Source modelID={ modelID }/>;
     }
     return (
       <div>

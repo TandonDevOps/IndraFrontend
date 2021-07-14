@@ -10,16 +10,17 @@ export default class Paragraph extends React.Component {
     this.state = {
       className: this.props.className,
       text: this.props.text,
+      style: this.props.style
     };
   }
 
   render() {
     const {
-      className, text,
+      className, text, style,
     } = this.state;
     return (
       <div>
-        <p className = {className}>
+        <p className={className} style={style}>
           {text}
         </p>
       </div>
@@ -29,10 +30,12 @@ export default class Paragraph extends React.Component {
 
 Paragraph.propTypes = {
   className: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
+  style: PropTypes.object
 };
 
 Paragraph.defaultProps = {
   className: "",
-  text: ""
+  text: "",
+  style: {}
 }

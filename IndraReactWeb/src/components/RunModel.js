@@ -43,6 +43,7 @@ class RunModel extends Component {
       initLoading: true,
       EXEC_KEY: environ.exec_key,
       serverError: false,
+      modelID: location.pathname.substr(13),
     };
     autoBind(this);
   }
@@ -271,7 +272,7 @@ class RunModel extends Component {
           this.handleClick(action);
           console.log(id);
           if (id === '4') {
-            history.push(`/models/debug/${EXEC_KEY.toString(10)}`);
+            history.push(`/models/debug/${this.state.modelID}`);
           }
         }}
       >
