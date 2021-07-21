@@ -74,7 +74,7 @@ class DebugMenu extends Component { // from react
     return (
       <div className="row margin-bottom-80">
         <div className="col w-25">
-          <ListGroup>
+          <ListGroup className="col-5">
             {Object.keys(menu).map((id) => (
               this.MenuItem(
               menu[id].question,
