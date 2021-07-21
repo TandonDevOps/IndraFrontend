@@ -102,6 +102,7 @@ class DebugMenu extends Component { // from react
           sectionLevel={"h1"} 
           className={"header"} 
           text={"Debug menu"}
+          style={{ marginBottom: '20px' }}
         />
         <div>
         </div>

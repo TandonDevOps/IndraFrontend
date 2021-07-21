@@ -60,6 +60,7 @@ class Home extends Component {
       sectionLevel={"h1"}
       className={"small-header"}
       text={"Please choose a model: "}
+      style={{ marginBottom: '15px' }}
     />
   );
 
