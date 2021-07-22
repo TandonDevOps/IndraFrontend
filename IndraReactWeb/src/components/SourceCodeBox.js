@@ -5,15 +5,16 @@ import axios from 'axios';
 import config from 'IndraReactCommon/config';
 import PageLoader from './PageLoader';
 import ErrorCatching from './ErrorCatching';
-import Paragraph from './Paragraph';
+import Heading from './Heading';
 
 const SOURCE_URL = config.SOURCE_URL;
 
-export default class Source extends React.Component {
+export default class SourceCodeBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modelID: this.props.modelID,
+      title: "Source Code",
       code: "",
       loadingData: true,
       serverError: false
@@ -38,7 +39,7 @@ export default class Source extends React.Component {
 
   render() {
     const {
-      loadingData, serverError, code,
+      loadingData, serverError, code, title
     } = this.state;
     if (serverError) {
       return <ErrorCatching />;
@@ -48,23 +49,32 @@ export default class Source extends React.Component {
     }
     return (
       <div>
-        <Paragraph
-          text={ code }
-          style={{ whiteSpace: "pre-wrap" }}
-        />
+        <div className="card">
+          <Heading
+            sectionLevel={"h5"}
+            style={{ textAlign: 'center', fontSize: 16 }}
+            className={"card-header bg-primary text-white"}
+            text={title}
+          />
+          <div className="card-body overflow-auto">
+            <pre className="card-text">
+              { code }
+            </pre>
+          </div>
+        </div>
       </div>
     )
   }
 }
 
-Source.propTypes = {
+SourceCodeBox.propTypes = {
   modelID: PropTypes.string,
   code: PropTypes.string,
   loadingData: PropTypes.bool,
   serverError: PropTypes.bool
 };
 
-Source.defaultProps = {
+SourceCodeBox.defaultProps = {
   modelID: "",
   code: "",
   loadingData: true,

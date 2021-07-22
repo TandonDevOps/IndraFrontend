@@ -7,7 +7,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
-import Source from './Source';
+import SourceCodeBox from './SourceCodeBox';
 
 
 class DebugMenu extends Component { // from react
@@ -89,14 +89,8 @@ class DebugMenu extends Component { // from react
     );
   };
 
-  render() {
-    const { modelID, modelName, serverError, activeDisplay } = this.state;
-    if (serverError) {
-      return <ErrorCatching />;
-    }
-    if (activeDisplay === '2') {
-      return <Source modelID={ modelID }/>;
-    }
+  renderHeader = () => {
+    const { modelName } = this.state;
     return (
       <div>
         <Heading 
@@ -105,15 +99,34 @@ class DebugMenu extends Component { // from react
           text={`Debug menu for ${modelName}`}
           style={{ marginBottom: '20px' }}
         />
+      </div>
+    )
+  }
+
+  renderSourceCode = () => {
+    const { modelID } = this.state;
+    return (
+      <div>
+          <SourceCodeBox
+            modelID={ modelID }
+          />
+      </div>
+    )
+  }
+
+  render() {
+    const { serverError, activeDisplay } = this.state;
+    if (serverError) {
+      return <ErrorCatching />;
+    }
+    return (
+      <div>
+        {this.renderHeader()}
         <div>
         </div>
-        <ul className="list-group">
-          <div className="row">
-          </div>
-        </ul>
         {this.renderMenuItem()}
-      </div>
-      
+        {(activeDisplay === '2') && this.renderSourceCode()}
+      </div> 
     );
   }
 }
