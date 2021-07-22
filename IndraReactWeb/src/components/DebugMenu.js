@@ -18,7 +18,8 @@ class DebugMenu extends Component { // from react
     this.debug_url = config.DEBUG_URL;
     this.state = {
       menu: {},
-      modelID: location.pathname.substr(13),
+      modelID: this.props.modelID,
+      modelName: this.props.modelName,
       activeDisplay: '',
       serverError: false,
     };
@@ -89,7 +90,7 @@ class DebugMenu extends Component { // from react
   };
 
   render() {
-    const { modelID, serverError, activeDisplay } = this.state;
+    const { modelID, modelName, serverError, activeDisplay } = this.state;
     if (serverError) {
       return <ErrorCatching />;
     }
@@ -101,7 +102,7 @@ class DebugMenu extends Component { // from react
         <Heading 
           sectionLevel={"h1"} 
           className={"header"} 
-          text={"Debug menu"}
+          text={`Debug menu for ${modelName}`}
           style={{ marginBottom: '20px' }}
         />
         <div>

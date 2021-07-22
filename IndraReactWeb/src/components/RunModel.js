@@ -13,6 +13,7 @@ import Button from './Button';
 import Heading from './Heading';
 import './styles.css';
 import config from 'IndraReactCommon/config';
+import DebugMenu from './DebugMenu';
 
 
 const POP = 2;
@@ -44,6 +45,7 @@ class RunModel extends Component {
       EXEC_KEY: environ.exec_key,
       serverError: false,
       modelID: location.pathname.substr(13),
+      clickedItem: '', 
     };
     autoBind(this);
   }
@@ -271,9 +273,10 @@ class RunModel extends Component {
         onClick={() => {
           this.handleClick(action);
           console.log(id);
-          if (id === '4') {
-            history.push(`/models/debug/${this.state.modelID}`);
-          }
+          // if (id === '4') {
+          //   history.push(`/models/debug/${this.state.modelID}`);
+          // }
+          this.setState({ clickedItem: id });
         }}
       >
         {text}
@@ -371,13 +374,16 @@ class RunModel extends Component {
 
   render() {
     const {
-      loadingData, initLoading, serverError,
+      loadingData, initLoading, serverError, clickedItem, modelID, name
     } = this.state;
     if (serverError) {
       return <ErrorCatching />;
     }
     if (loadingData && initLoading) {
       return <PageLoader />;
+    }
+    if (clickedItem === '4'){
+      return <DebugMenu modelID={ modelID } modelName={ name } />
     }
     // if (loadingData && !initLoading){
     //   return;
