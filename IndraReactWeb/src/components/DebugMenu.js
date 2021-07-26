@@ -7,7 +7,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
-import SourceCodeBox from './SourceCodeBox';
+import DebugMenuResultBox from './DebugMenuResultBox';
 
 
 class DebugMenu extends Component { // from react
@@ -20,6 +20,7 @@ class DebugMenu extends Component { // from react
       menu: {},
       modelID: this.props.modelID,
       modelName: this.props.modelName,
+      EXEC_KEY: this.props.EXEC_KEY,
       activeDisplay: '',
       serverError: false,
     };
@@ -107,8 +108,47 @@ class DebugMenu extends Component { // from react
     const { modelID } = this.state;
     return (
       <div>
-          <SourceCodeBox
+          <DebugMenuResultBox
             modelID={ modelID }
+            title={ "Source Code" }
+            type={ "source" }
+          />
+      </div>
+    )
+  }
+
+  renderRegistry = () => {
+    return (
+      <div>
+          <DebugMenuResultBox
+            title={ "Registry" }
+            type={ "registry" }
+          />
+      </div>
+    )
+  }
+
+  renderLocations = () => {
+    const { EXEC_KEY } = this.state;
+    return (
+      <div>
+          <DebugMenuResultBox
+            EXEC_KEY={ EXEC_KEY }
+            title={ "Locations" }
+            type={ "locations" }
+          />
+      </div>
+    )
+  }
+
+  renderPopHist = () => {
+    const { EXEC_KEY } = this.state;
+    return (
+      <div>
+          <DebugMenuResultBox
+            EXEC_KEY={ EXEC_KEY }
+            title={ "Population History" }
+            type={ "pophist" }
           />
       </div>
     )
@@ -126,6 +166,9 @@ class DebugMenu extends Component { // from react
         </div>
         {this.renderMenuItem()}
         {(activeDisplay === '2') && this.renderSourceCode()}
+        {(activeDisplay === '4') && this.renderRegistry()}
+        {(activeDisplay === '5') && this.renderLocations()}
+        {(activeDisplay === '6') && this.renderPopHist()}
       </div> 
     );
   }

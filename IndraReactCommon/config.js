@@ -26,8 +26,10 @@
  let USER_MSGS_URL = API_URL + 'user/msgs/';
  let DEBUG_URL = API_URL + 'menus/debug';
  let SOURCE_URL = API_URL + 'source/';
+ let REGISTRY_URL = API_URL + 'registry';
+ let LOCATION_URL = API_URL + 'locations/';
 
- const config = { API_URL, PROPS_URL, MENU_URL, RUN_URL, CLEAR_REGISTRY_URL, POPHIST_URL, USER_MSGS_URL, DEBUG_URL, SOURCE_URL };
+ const config = { API_URL, PROPS_URL, MENU_URL, RUN_URL, CLEAR_REGISTRY_URL, POPHIST_URL, USER_MSGS_URL, DEBUG_URL, SOURCE_URL, REGISTRY_URL, LOCATION_URL };
  
  export default config;
  
