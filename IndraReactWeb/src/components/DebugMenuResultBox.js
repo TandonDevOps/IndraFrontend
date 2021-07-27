@@ -7,6 +7,7 @@ import PageLoader from './PageLoader';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
 
+const DETAILS_URL = config.DETAILS_URL;
 const SOURCE_URL = config.SOURCE_URL;
 const REGISTRY_URL = config.REGISTRY_URL;
 const LOCATION_URL = config.LOCATION_URL;
@@ -33,6 +34,15 @@ export default class DebugMenuResultBox extends React.Component {
     try {
       let res;
       switch(type) {
+        case "details":
+          res = await axios.get(`${DETAILS_URL}`);
+
+          this.setState({
+            content: JSON.stringify(res.data, null, 2),
+            loadingData: false
+          });
+          break;
+
         case "source":
           res = await axios.get(`${SOURCE_URL}${modelID}`);
 
@@ -52,7 +62,6 @@ export default class DebugMenuResultBox extends React.Component {
         
         case "locations":
           res = await axios.get(`${LOCATION_URL}${EXEC_KEY}`);
-          console.log(res)
           this.setState({
             content: JSON.stringify(res.data, null, 2),
             loadingData: false
@@ -61,7 +70,6 @@ export default class DebugMenuResultBox extends React.Component {
 
         case "pophist":
           res = await axios.get(`${POPHIST_URL}${EXEC_KEY}`);
-          console.log(res)
           this.setState({
             content: JSON.stringify(res.data, null, 2),
             loadingData: false

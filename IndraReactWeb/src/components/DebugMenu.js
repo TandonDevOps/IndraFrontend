@@ -8,7 +8,10 @@ import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
 import DebugMenuResultBox from './DebugMenuResultBox';
+import ViewAgentBox from './ViewAgentBox';
 
+const BACK_ID = '-1'
+const BACK_TEXT = "Back"
 
 class DebugMenu extends Component { // from react
 
@@ -21,6 +24,7 @@ class DebugMenu extends Component { // from react
       modelID: this.props.modelID,
       modelName: this.props.modelName,
       EXEC_KEY: this.props.EXEC_KEY,
+      handleReturn: this.props.handleReturn,
       activeDisplay: '',
       serverError: false,
     };
@@ -72,7 +76,7 @@ class DebugMenu extends Component { // from react
   };
 
   renderMenuItem = () => {
-    const { menu } = this.state;
+    const { menu, activeDisplay, handleReturn } = this.state;
     return (
       <div className="row margin-bottom-80">
         <div className="col w-25">
@@ -84,6 +88,16 @@ class DebugMenu extends Component { // from react
               id
               )
             ))}
+
+            <ListGroup.Item
+              className="w-50 p-3 list-group-item list-group-item-action"
+              as="li"
+              key={BACK_ID}
+              active = {activeDisplay === BACK_ID}
+              onClick={handleReturn}
+            >
+              { BACK_TEXT }
+            </ListGroup.Item>
           </ListGroup>
         </div>
       </div>
@@ -104,6 +118,17 @@ class DebugMenu extends Component { // from react
     )
   }
 
+  renderModelDetails = () => {
+    return (
+      <div>
+          <DebugMenuResultBox
+            title={ "Model Details" }
+            type={ "details" }
+          />
+      </div>
+    )
+  }
+
   renderSourceCode = () => {
     const { modelID } = this.state;
     return (
@@ -113,6 +138,17 @@ class DebugMenu extends Component { // from react
             title={ "Source Code" }
             type={ "source" }
           />
+      </div>
+    )
+  }
+
+  renderAgent = () => {
+    const { EXEC_KEY } = this.state;
+    return (
+      <div>
+        <ViewAgentBox
+          EXEC_KEY={ EXEC_KEY }
+        />
       </div>
     )
   }
@@ -165,7 +201,9 @@ class DebugMenu extends Component { // from react
         <div>
         </div>
         {this.renderMenuItem()}
+        {(activeDisplay === '1') && this.renderModelDetails()}
         {(activeDisplay === '2') && this.renderSourceCode()}
+        {(activeDisplay === '3') && this.renderAgent()}
         {(activeDisplay === '4') && this.renderRegistry()}
         {(activeDisplay === '5') && this.renderLocations()}
         {(activeDisplay === '6') && this.renderPopHist()}

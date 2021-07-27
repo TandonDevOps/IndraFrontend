@@ -372,6 +372,12 @@ class RunModel extends Component {
     )
   }
 
+  handleReturnFromDebug = () => {
+    this.setState({
+      clickedItem: ''
+    })
+  }
+
   render() {
     const {
       loadingData, initLoading, serverError, clickedItem, modelID, name, EXEC_KEY
@@ -383,7 +389,7 @@ class RunModel extends Component {
       return <PageLoader />;
     }
     if (clickedItem === '4'){
-      return <DebugMenu modelID={ modelID } modelName={ name } EXEC_KEY={ EXEC_KEY }/>
+      return <DebugMenu modelID={ modelID } modelName={ name } EXEC_KEY={ EXEC_KEY } handleReturn={ this.handleReturnFromDebug }/>
     }
     // if (loadingData && !initLoading){
     //   return;
