@@ -22,21 +22,15 @@ const Wrapper = styled('div')`
 `;
 
 function App() {
-  try {
-    return (
-      <Wrapper>
-        <HashRouter>
-          <Layout>
-            <IndraRoutes />
-          </Layout>
-        </HashRouter>
-      </Wrapper>
-    );
-  } catch (error) {
-    return (
-      <ErrorCatching />
-    );
-  }
+  return (
+    <Wrapper>
+      <HashRouter>
+        <Layout>
+          <IndraRoutes />
+        </Layout>
+      </HashRouter>
+    </Wrapper>
+  );
 }
 
 export function IndraRoutes() {

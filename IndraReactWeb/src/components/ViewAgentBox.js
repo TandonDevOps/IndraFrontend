@@ -46,9 +46,17 @@ export default class ViewAgentBox extends React.Component {
           loadingData: false
         });
       } catch (error) {
-        this.setState({
-          serverError: true
-        });
+        if (error.response.status === 404) {
+          this.setState({
+            errorMessage: error.response.data.message,
+            loadingData: false,
+            displayBox: false
+          });
+        } else {
+          this.setState({
+            serverError: true
+          });
+        }
       }
     }
     else {
@@ -129,9 +137,23 @@ export default class ViewAgentBox extends React.Component {
 }
 
 ViewAgentBox.propTypes = {
-  
+  EXEC_KEY: PropTypes.number,
+  agentName: PropTypes.string,
+  displayBox: PropTypes.bool,
+  title: PropTypes.string,
+  errorMessage: PropTypes.string,
+  content: PropTypes.string,
+  serverError: PropTypes.bool,
+  loadingData: PropTypes.bool,
 };
 
 ViewAgentBox.defaultProps = {
-  
+  EXEC_KEY: -1,
+  agentName: "",
+  displayBox: false,
+  title: "",
+  errorMessage: "",
+  content: "",
+  serverError: false,
+  loadingData: false,
 };

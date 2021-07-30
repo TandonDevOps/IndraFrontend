@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import config from 'IndraReactCommon/config';
 import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import PropTypes from 'prop-types';
 import ErrorCatching from './ErrorCatching';
 import Heading from './Heading';
@@ -17,7 +15,7 @@ class DebugMenu extends Component { // from react
 
   constructor(props){
     super(props);
-    const {location} = this.props;
+    //const {location} = this.props;
     this.debug_url = config.DEBUG_URL;
     this.state = {
       menu: {},
@@ -53,12 +51,7 @@ class DebugMenu extends Component { // from react
   MenuItem = (text, url, id) => {
     const { activeDisplay } = this.state;
     return (
-      <OverlayTrigger
-        key={id}
-        placement="right"
-        overlay={<Tooltip>{"This feature is under development."}</Tooltip>}
-      >
-        <ListGroup.Item
+      <ListGroup.Item
         className="w-50 p-3 list-group-item list-group-item-action"
         as="li"
         key={id}
@@ -70,8 +63,6 @@ class DebugMenu extends Component { // from react
       >
         {text}
       </ListGroup.Item>
-      </OverlayTrigger>
-      
     );
   };
 
@@ -119,9 +110,11 @@ class DebugMenu extends Component { // from react
   }
 
   renderModelDetails = () => {
+    const { EXEC_KEY } = this.state;
     return (
       <div>
           <DebugMenuResultBox
+            EXEC_KEY={ EXEC_KEY }
             title={ "Model Details" }
             type={ "details" }
           />

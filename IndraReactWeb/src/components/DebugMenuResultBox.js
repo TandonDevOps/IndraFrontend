@@ -35,7 +35,7 @@ export default class DebugMenuResultBox extends React.Component {
       let res;
       switch(type) {
         case "details":
-          res = await axios.get(`${DETAILS_URL}`);
+          res = await axios.get(`${DETAILS_URL}${EXEC_KEY}`);
 
           this.setState({
             content: JSON.stringify(res.data, null, 2),
@@ -125,6 +125,7 @@ DebugMenuResultBox.propTypes = {
   title: PropTypes.string,
   EXEC_KEY: PropTypes.number,
   type: PropTypes.string,
+  content: PropTypes.string,
   loadingData: PropTypes.bool,
   serverError: PropTypes.bool
 };
@@ -134,6 +135,7 @@ DebugMenuResultBox.defaultProps = {
   title: "",
   EXEC_KEY: -1,
   type: "",
+  content: "",
   loadingData: true,
   serverError: false
 };
