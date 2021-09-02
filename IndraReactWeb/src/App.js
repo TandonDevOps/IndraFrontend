@@ -22,6 +22,20 @@ const Wrapper = styled('div')`
   }
 `;
 
+export function IndraRoutes() {
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/wip" component={WIP} />
+      <Route exact path="/models/props/:id" component={ModelParams} />
+      <Route exact path="/models/menu/:id" component={RunModel} />
+      <Route exact path="/models/debug/:id" component={DebugMenu} />
+      <Route exact path="/errorCatching" component={ErrorCatching} />
+      <Route component={NotFoundPage} />
+    </Switch>
+  );
+}
+
 class App extends React.Component {
 
   constructor(props) {
@@ -31,23 +45,9 @@ class App extends React.Component {
 
   componentDidMount() {
     window.history.pushState(null, document.title, window.location.href);
-    window.addEventListener('popstate', function (event){
+    window.addEventListener('popstate', function (){
       window.history.pushState(null, document.title,  window.location.href);
     });
-  }
-
-  indraRoutes() {
-    return (
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/wip" component={WIP} />
-        <Route exact path="/models/props/:id" component={ModelParams} />
-        <Route exact path="/models/menu/:id" component={RunModel} />
-        <Route exact path="/models/debug/:id" component={DebugMenu} />
-        <Route exact path="/errorCatching" component={ErrorCatching} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    );
   }
 
   render() {
@@ -55,7 +55,7 @@ class App extends React.Component {
       <Wrapper>
         <HashRouter>
           <Layout>
-            {this.indraRoutes()}
+            {IndraRoutes()}
           </Layout>
         </HashRouter>
       </Wrapper>

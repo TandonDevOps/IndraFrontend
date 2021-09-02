@@ -417,6 +417,7 @@ RunModel.propTypes = {
       source: PropTypes.string,
       graph: PropTypes.string,
     }),
+    pathname: PropTypes.string,
   }),
   /* eslint-disable */
   history: PropTypes.object,

@@ -206,6 +206,10 @@ class DebugMenu extends Component { // from react
 }
 
 DebugMenu.propTypes = {
+  modelID: PropTypes.string,
+  modelName: PropTypes.string,
+  EXEC_KEY: PropTypes.number,
+  handleReturn: PropTypes.func,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }),
