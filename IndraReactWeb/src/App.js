@@ -10,7 +10,7 @@ import NotFoundPage from './components/NotFoundPage';
 import ErrorCatching from './components/ErrorCatching';
 import DebugMenu from './components/DebugMenu';
 import autoBind from 'react-autobind';
-import { Generator } from "./components/Generator";
+import { ModelGenerator } from "./components/ModelGenerator";
 
 // The styling below should be in a style sheet, not in javascript:
 const Wrapper = styled('div')`
@@ -32,7 +32,7 @@ export function IndraRoutes() {
       <Route exact path="/models/menu/:id" component={RunModel} />
       <Route exact path="/models/debug/:id" component={DebugMenu} />
       <Route exact path="/errorCatching" component={ErrorCatching} />
-      <Route exact path="/generator" component={Generator} />
+      <Route exact path="/generator" component={ModelGenerator} />
       <Route component={NotFoundPage} />
     </Switch>
   );

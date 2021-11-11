@@ -9,3 +9,4 @@ IndraReactNative/.eslintrc.json
 IndraReactNative/package-lock.json
 IndraReactWeb/build
 IndraReactWeb/coverage
+.idea
