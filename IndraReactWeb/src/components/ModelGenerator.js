@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
 
-export const Generator = () => {
+export const ModelGenerator = () => {
   const [step, setStep] = useState(0);
 
   const [name, setName] = useState('');
@@ -91,19 +91,6 @@ export const Generator = () => {
           onChange={e => setGroup({
             ...group,
             membersNum: e.target.value
-          })}
-        />
-      </div>
-      <p>How many actions does the group have?</p>
-      <div>
-        <input
-          className="col-sm-4 col-md-4 col-lg-4"
-          value={group.actionsNum}
-          style={{ width: 200 }}
-          type="text"
-          onChange={e => setGroup({
-            ...group,
-            actionsNum: e.target.value
           })}
         />
       </div>

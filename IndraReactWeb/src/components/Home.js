@@ -17,6 +17,7 @@ import Heading from './Heading';
 
 //import { getModels } from 'IndraReactCommon/APICalls';
 import config from 'IndraReactCommon/config';
+import Button from "./Button";
 
 class Home extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class Home extends Component {
       serverError: false,
     };
     this.api_server = config.API_URL;
+    this.useGenerator = process.env.REACT_APP_USE_GENERATOR;
   }
  
 
@@ -126,6 +128,14 @@ class Home extends Component {
                     </OverlayTrigger>
                   ) : null))}
               </Dropdown.Menu>
+              {
+                this.useGenerator &&
+                  <div style={{ marginTop: 200 }}>
+                    <Link to="/generator">
+                      <Button text="Generate New Model" />
+                    </Link>
+                  </div>
+              }
             </Dropdown>
           </Col>
           <Col sm={12} lg={{ cols: 6, span: 6, offset: 2 }}>
