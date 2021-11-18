@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f7ad7859cc467f0022b85ccbaa238502",
+    "revision": "705b7007978b35dcaf75ca469c0e726b",
     "url": "/IndraFrontend/index.html"
   },
   {
-    "revision": "d77b90ce231bf9259831",
+    "revision": "e73191d758ac4c381cb2",
     "url": "/IndraFrontend/static/css/2.1d56c5fb.chunk.css"
   },
   {
-    "revision": "412811d14fcf7a4f02db",
-    "url": "/IndraFrontend/static/css/main.83acbbd9.chunk.css"
+    "revision": "2a218f21566924caad32",
+    "url": "/IndraFrontend/static/css/main.71522c3b.chunk.css"
   },
   {
-    "revision": "d77b90ce231bf9259831",
-    "url": "/IndraFrontend/static/js/2.9dff2b5b.chunk.js"
+    "revision": "e73191d758ac4c381cb2",
+    "url": "/IndraFrontend/static/js/2.f5bc64dc.chunk.js"
   },
   {
     "revision": "b615c7ebc3c14e722fcaf6153be9f836",
-    "url": "/IndraFrontend/static/js/2.9dff2b5b.chunk.js.LICENSE.txt"
+    "url": "/IndraFrontend/static/js/2.f5bc64dc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "412811d14fcf7a4f02db",
-    "url": "/IndraFrontend/static/js/main.03b58137.chunk.js"
+    "revision": "2a218f21566924caad32",
+    "url": "/IndraFrontend/static/js/main.eed8e9ca.chunk.js"
   },
   {
     "revision": "7a755e9e827198223442",
