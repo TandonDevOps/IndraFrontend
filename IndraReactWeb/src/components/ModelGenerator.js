@@ -31,6 +31,7 @@ export const ModelGenerator = () => {
       </div>
       <br />
       <button
+        disabled={!name}
         className="btn btn-success m-1"
         onClick={() => createModel()}
       >
@@ -107,6 +108,7 @@ export const ModelGenerator = () => {
       <button
         className="btn btn-success m-1"
         onClick={() => modelGroup()}
+        disabled={!group.name || !group.color}
       >
         Next
       </button>
@@ -145,6 +147,7 @@ export const ModelGenerator = () => {
         <button
           className="btn btn-success m-1"
           onClick={() => modelAction()}
+          disabled={!action}
         >
           Next
         </button>
