@@ -6,6 +6,8 @@ import config from 'IndraReactCommon/config';
 export const ModelGenerator = () => {
   const [step, setStep] = useState(0);
 
+  const [firstData, setFirstData] = useState(null);
+
   const [name, setName] = useState('');
   const [loadingStepOne, setLoadingStepOne] = useState(false);
   const createModel = () => {
@@ -13,7 +15,7 @@ export const ModelGenerator = () => {
     axios.post(`${config.GENERATOR_CREATE_MODEL}?model_name=${name}`)
       .then((res) => {
         setLoadingStepOne(false);
-        window.alert(`i got this: ${JSON.stringify(res.data)}`);
+        setFirstData(res.data);
         setStep(1);
         setName('');
       })
@@ -28,7 +30,12 @@ export const ModelGenerator = () => {
         <input value={name} className="col-sm-4 col-md-4 col-lg-4" style={{ width: 200 }} type="text" onChange={e => setName(e.target.value)} />
       </div>
       <br />
-      <button  text="Submit" className="btn btn-success m-1" onClick={() => createModel()}>Next</button>
+      <button
+        className="btn btn-success m-1"
+        onClick={() => createModel()}
+      >
+        Next
+      </button>
       {loadingStepOne && <span>Loading...</span>}
     </>
   );
@@ -42,7 +49,7 @@ export const ModelGenerator = () => {
   const [loadingStepTwo, setLoadingStepTwo] = useState(false);
   const modelGroup = () => {
     setLoadingStepTwo(true);
-    axios.post(`${config.GENERATOR_CREATE_GROUP}111?group_name=${group.name}&group_color=${group.color}&group_number_of_members=${group.membersNum}&group_actions=${group.actionsNum}`)
+    axios.post(`${config.GENERATOR_CREATE_GROUP}${firstData && firstData.exec_key}?group_name=${group.name}&group_color=${group.color}&group_number_of_members=${group.membersNum}&group_actions=${group.actionsNum}`)
       .then((res) => {
         window.alert(JSON.stringify(res.data));
         setLoadingStepTwo(false);
@@ -94,7 +101,12 @@ export const ModelGenerator = () => {
           })}
         />
       </div>
-      <button  text="Submit" className="btn btn-success m-1" onClick={() => modelGroup()}>Next</button>
+      <button
+        className="btn btn-success m-1"
+        onClick={() => modelGroup()}
+      >
+        Next
+      </button>
       {loadingStepTwo && <span>Loading...</span>}
     </>
   )
