@@ -40,6 +40,8 @@ export const ModelGenerator = () => {
     </>
   );
 
+  const [secondData, setSecondData] = useState(null);
+
   const [group, setGroup] = useState({
     name: '',
     color: '',
@@ -51,8 +53,9 @@ export const ModelGenerator = () => {
     setLoadingStepTwo(true);
     axios.post(`${config.GENERATOR_CREATE_GROUP}${firstData && firstData.exec_key}?group_name=${group.name}&group_color=${group.color}&group_number_of_members=${group.membersNum}&group_actions=${group.actionsNum}`)
       .then((res) => {
-        window.alert(JSON.stringify(res.data));
         setLoadingStepTwo(false);
+        setSecondData(res.data);
+        setStep(2)
       })
       .catch(() => {
         window.alert("something went wrong");
@@ -109,12 +112,54 @@ export const ModelGenerator = () => {
       </button>
       {loadingStepTwo && <span>Loading...</span>}
     </>
-  )
+  );
+
+  const [action, setAction] = useState("");
+  const [loadingStepThree, setLoadingStepThree] = useState(false);
+
+  const modelAction = () => {
+    setLoadingStepThree(true);
+    axios.post(`${config.GENERATOR_CREATE_ACTION}${secondData && secondData.exec_key}?group_name=${action}`)
+      .then((res) => {
+        setLoadingStepThree(false);
+        console.log(res.data);
+      })
+      .catch(() => {
+        window.alert("something went wrong");
+        setLoadingStepThree(false);
+      });
+  }
+
+  const renderStepThree = () => {
+    return (
+      <>
+        <p>Describe your action</p>
+        <input
+          className="col-sm-4 col-md-4 col-lg-4"
+          value={action}
+          style={{ width: 200 }}
+          type="text"
+          onChange={e => setAction(e.target.value)}
+        />
+        <br />
+        <button
+          className="btn btn-success m-1"
+          onClick={() => modelAction()}
+        >
+          Next
+        </button>
+        {loadingStepThree && <span>Loading...</span>}
+      </>
+    )
+  };
+
   const renderForm = () => {
     if (step === 0) {
       return renderStepOne();
     } else if (step === 1) {
       return renderStepTwo();
+    } else if (step === 2) {
+      return renderStepThree();
     }
   }
   return (
