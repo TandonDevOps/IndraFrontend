@@ -2,8 +2,12 @@
 import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
+import { Dropdown } from 'react-bootstrap';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import {Link} from "react-router-dom";
 
-export const ModelGenerator = () => {
+export default () => {
   const [step, setStep] = useState(0);
 
   const [firstData, setFirstData] = useState(null);
@@ -62,6 +66,12 @@ export const ModelGenerator = () => {
         window.alert("something went wrong");
         setLoadingStepTwo(false);
       });
+  }
+  const allItems = {
+    a: {
+      name: "333",
+      doc: "444"
+    }
   }
   const renderStepTwo = () => (
     <>
@@ -143,6 +153,41 @@ export const ModelGenerator = () => {
           type="text"
           onChange={e => setAction(e.target.value)}
         />
+        <br />
+        <div>You can choose a group name from below</div>
+        <Dropdown>
+          <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+            Choose...
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {Object.keys(allItems).map((item) => (!('active' in allItems[item])
+            || allItems[item].active === true ? (
+              <OverlayTrigger
+                key={`${allItems[item].name}-tooltip`}
+                placement="right"
+                overlay={<Tooltip>{allItems[item].doc}</Tooltip>}
+              >
+                <Link
+                  to={{
+                    pathname: `/models/props/${allItems[item].modelID}`,
+                    state: {
+                      menuId: allItems[item].modelID,
+                      name: allItems[item].name,
+                      source: allItems[item].source,
+                      graph: allItems[item].graph,
+                    },
+                  }}
+                  className="link text-dark dropdown-item"
+                  key={allItems[item].name}
+                >
+                  {allItems[item].name}
+                </Link>
+              </OverlayTrigger>
+            ) : null))}
+          </Dropdown.Menu>
+        </Dropdown>
+        <div>Describe the group action</div>
+        <input />
         <br />
         <button
           className="btn btn-success m-1"
