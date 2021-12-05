@@ -161,30 +161,8 @@ export default () => {
             Choose...
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            {Object.keys(allItems).map((item) => (!('active' in allItems[item])
-            || allItems[item].active === true ? (
-              <OverlayTrigger
-                key={`${allItems[item].name}-tooltip`}
-                placement="right"
-                overlay={<Tooltip>{allItems[item].doc}</Tooltip>}
-              >
-                <Link
-                  to={{
-                    pathname: `/models/props/${allItems[item].modelID}`,
-                    state: {
-                      menuId: allItems[item].modelID,
-                      name: allItems[item].name,
-                      source: allItems[item].source,
-                      graph: allItems[item].graph,
-                    },
-                  }}
-                  className="link text-dark dropdown-item"
-                  key={allItems[item].name}
-                >
-                  {allItems[item].name}
-                </Link>
-              </OverlayTrigger>
-            ) : null))}
+            <div>23</div>
+            <div>34</div>
           </Dropdown.Menu>
         </Dropdown>
         <div>Describe the group action</div>
