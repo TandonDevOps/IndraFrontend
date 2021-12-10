@@ -14,6 +14,6 @@ else
 fi
 
 # run react locally against local server
-export REACT_APP_API_URL=http://127.0.0.1:$API_PORT/ 
+export REACT_APP_API_URL=http://0.0.0.0:$API_PORT/ 
 npm start
 echo "If you need to kill the API Server, you can run the ps command and kill its PID."

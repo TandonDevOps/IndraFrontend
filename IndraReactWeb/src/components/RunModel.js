@@ -304,9 +304,10 @@ class RunModel extends Component {
     return (
       <div className="row margin-bottom-80">
         <div className="col w-25">
+        {/* loop over the menu items and add them to menu if active: */}
           <ListGroup>
             {Object.keys(menu).map((id) => (
-            parseInt(id) > 1
+            menu[id].active_web == true
               ? this.ModelAnalysisMenuItem(
                 id,
                 parseInt(id),
