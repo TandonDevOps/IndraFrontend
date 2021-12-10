@@ -54,4 +54,4 @@ export default function ({ secondData }) {
       {loadingStepThree && <span>Loading...</span>}
     </>
   );
-};
+}
