@@ -1,6 +1,8 @@
 import React, {useState} from "react";
+import axios from "axios";
+import config from 'IndraReactCommon/config';
 
-export default function({ data, name }) {
+export default function({ data, name, next }) {
   const [groupName, setGroupName] = useState("");
   const [groupColor, setGroupColor] = useState("");
   const [groupCount, setGroupCount] = useState(0);
@@ -75,5 +77,16 @@ export default function({ data, name }) {
         }}
       >Add</button>
     </div>
+    <button
+      className="btn btn-success m-1"
+      onClick={() => {
+        Promise.all(listOfGroups.map(o => (
+          axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
+        ))).then(() => {
+          setListOfGroups([]);
+          next();
+        })
+      }}
+    >Save & Continue</button>
   </>;
 }

@@ -68,7 +68,9 @@ export default () => {
   }
   const renderStepTwo = () => (
     <>
-      <GroupInput data={firstData} name={name} />
+      <GroupInput data={firstData} name={name} next={() => {
+        setStep(2)
+      }} />
       {loadingStepTwo && <span>Loading...</span>}
     </>
   );
