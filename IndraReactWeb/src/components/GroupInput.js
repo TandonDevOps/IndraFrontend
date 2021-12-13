@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
+import PropTypes from 'prop-types';
 
-export default function({ data, name, next }) {
+function GroupInput({ data, name, next }) {
   const [groupName, setGroupName] = useState("");
   const [groupColor, setGroupColor] = useState("");
   const [groupCount, setGroupCount] = useState(0);
@@ -13,8 +14,8 @@ export default function({ data, name, next }) {
 
     <ul>
       {listOfGroups.map((o, i) => (
-        <li>
-          name: {o.name}&nbsp;color: {o.color}&nbsp;count: {o.count}
+        <li key={o.name}>
+          {i}: name: {o.name}&nbsp;color: {o.color}&nbsp;count: {o.count}
         </li>
       ))}
     </ul>
@@ -90,3 +91,11 @@ export default function({ data, name, next }) {
     >Save & Continue</button>
   </>;
 }
+
+GroupInput.propTypes = {
+  data: PropTypes.object,
+  name: PropTypes.string,
+  next: PropTypes.func
+}
+
+export default GroupInput;

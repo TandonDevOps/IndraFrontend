@@ -2,8 +2,9 @@ import {Dropdown} from "react-bootstrap";
 import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
+import PropTypes from "prop-types";
 
-export default function ({ secondData }) {
+function ActionsInput({ secondData }) {
   const [action, setAction] = useState("");
   const [actionName, setActionName] = useState("");
   const [loadingStepThree, setLoadingStepThree] = useState(false);
@@ -55,3 +56,9 @@ export default function ({ secondData }) {
     </>
   );
 }
+
+ActionsInput.propTypes = {
+  secondData: PropTypes.object
+}
+
+export default ActionsInput;

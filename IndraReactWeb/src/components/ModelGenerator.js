@@ -43,37 +43,15 @@ export default () => {
       {loadingStepOne && <span>Loading...</span>}
     </>
   );
-
-  const [secondData, setSecondData] = useState(null);
-
-  const [group, setGroup] = useState({
-    name: '',
-    color: '',
-    membersNum: "0",
-    actionsNum: "0"
-  });
-  const [loadingStepTwo, setLoadingStepTwo] = useState(false);
-  const modelGroup = () => {
-    setLoadingStepTwo(true);
-    axios.post(`${config.GENERATOR_CREATE_GROUP}${firstData && firstData.exec_key}?group_name=${group.name}&group_color=${group.color}&group_number_of_members=${group.membersNum}&group_actions=${group.actionsNum}`)
-      .then((res) => {
-        setLoadingStepTwo(false);
-        setSecondData(res.data);
-        setStep(2)
-      })
-      .catch(() => {
-        window.alert("something went wrong");
-        setLoadingStepTwo(false);
-      });
-  }
   const renderStepTwo = () => (
     <>
       <GroupInput data={firstData} name={name} next={() => {
         setStep(2)
       }} />
-      {loadingStepTwo && <span>Loading...</span>}
     </>
   );
+
+  const secondData = {};
 
   const renderStepThree = () => {
     return (
