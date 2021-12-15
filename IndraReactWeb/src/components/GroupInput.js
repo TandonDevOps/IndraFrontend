@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
 import PropTypes from 'prop-types';
+import Button from "./Button";
 
 function GroupInput({ data, name, next }) {
   const [groupName, setGroupName] = useState("");
@@ -62,7 +63,7 @@ function GroupInput({ data, name, next }) {
           onChange={e => setGroupCount(e.target.value)}
         />
       </div>
-      <button
+      <Button
         className="btn btn-success m-1"
         onClick={() => {
           setListOfGroups(
@@ -76,19 +77,26 @@ function GroupInput({ data, name, next }) {
           setGroupColor("");
           setGroupCount(0);
         }}
-      >Add</button>
+        text="Add"
+      />
     </div>
-    <button
+    <Button
       className="btn btn-success m-1"
       onClick={() => {
-        Promise.all(listOfGroups.map(o => (
-          axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
-        ))).then(() => {
-          setListOfGroups([]);
-          next();
-        })
+        listOfGroups.forEach(async o => {
+          await axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
+        });
+        setListOfGroups([]);
+        next();
+        // Promise.all(listOfGroups.map(o => (
+        //   axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
+        // ))).then(() => {
+        //   setListOfGroups([]);
+        //   next();
+        // })
       }}
-    >Save & Continue</button>
+      text="Save & Continue"
+    />
   </>;
 }
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import config from 'IndraReactCommon/config';
 import ActionsInput from "./ActionsInput";
 import GroupInput from "./GroupInput";
+import Button from "./Button";
 
 export default () => {
   const [step, setStep] = useState(0);
@@ -33,13 +34,12 @@ export default () => {
         <input value={name} className="col-sm-4 col-md-4 col-lg-4" style={{ width: 200 }} type="text" onChange={e => setName(e.target.value)} />
       </div>
       <br />
-      <button
+      <Button
         disabled={!name}
         className="btn btn-success m-1"
         onClick={() => createModel()}
-      >
-        Next
-      </button>
+        text="Next"
+      />
       {loadingStepOne && <span>Loading...</span>}
     </>
   );
