@@ -3,18 +3,20 @@ import React, {useState} from "react";
 import axios from "axios";
 import config from 'IndraReactCommon/config';
 import PropTypes from "prop-types";
+import Button from "./Button";
+import ModelInputField from "./ModelInputField";
 
 function ActionsInput({ secondData }) {
-  const [action, setAction] = useState("");
-  const [actionName, setActionName] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [groupAction, setGroupAction] = useState("");
+
   const [loadingStepThree, setLoadingStepThree] = useState(false);
 
   const modelAction = () => {
     setLoadingStepThree(true);
-    axios.post(`${config.GENERATOR_CREATE_ACTION}${secondData && secondData.exec_key}?group_name=${action}&group_action=${actionName}`)
-      .then((res) => {
+    axios.post(`${config.GENERATOR_CREATE_ACTION}${secondData && secondData.exec_key}?group_name=${groupName}&group_action=${groupAction}`)
+      .then(() => {
         setLoadingStepThree(false);
-        console.log(res.data);
       })
       .catch(() => {
         window.alert("something went wrong");
@@ -23,13 +25,10 @@ function ActionsInput({ secondData }) {
   }
   return (
     <>
-      <p>Describe your action</p>
-      <input
-        className="col-sm-4 col-md-4 col-lg-4"
-        value={action}
-        style={{ width: 200 }}
+      <ModelInputField
+        label="Describe your action"
         type="text"
-        onChange={e => setAction(e.target.value)}
+        propChange={e => setGroupName(e.target.value)}
       />
       <br />
       <div>You can choose a group name from below</div>
@@ -42,16 +41,24 @@ function ActionsInput({ secondData }) {
           <div>34</div>
         </Dropdown.Menu>
       </Dropdown>
-      <div>Describe the group action</div>
-      <input onChange={e => setActionName(e.target.value)} />
+      <ModelInputField
+        label="Action method name"
+        type="text"
+        propChange={e => setGroupAction(e.target.value)}
+      />
       <br />
-      <button
-        className="btn btn-success m-1"
+      <ModelInputField
+        label="Action submethod name"
+        type="text"
+        propChange={e => setGroupAction(e.target.value)}
+      />
+      <br />
+      <Button
+        className="btn btn-primary m-2"
         onClick={() => modelAction()}
-        disabled={!action}
-      >
-        Next
-      </button>
+        disabled={!groupName}
+        text="Next"
+      />
       {loadingStepThree && <span>Loading...</span>}
     </>
   );

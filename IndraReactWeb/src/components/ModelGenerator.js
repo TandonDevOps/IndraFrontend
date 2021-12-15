@@ -5,6 +5,7 @@ import config from 'IndraReactCommon/config';
 import ActionsInput from "./ActionsInput";
 import GroupInput from "./GroupInput";
 import Button from "./Button";
+import ModelInputField from "./ModelInputField";
 
 export default () => {
   const [step, setStep] = useState(0);
@@ -29,14 +30,17 @@ export default () => {
   const renderStepOne = () => (
     <>
       <h4>Generate Your Model Now!</h4>
-      <p>Please specify the name of your model.</p>
       <div>
-        <input value={name} className="col-sm-4 col-md-4 col-lg-4" style={{ width: 200 }} type="text" onChange={e => setName(e.target.value)} />
+        <ModelInputField
+          label="Please specify the name of your model."
+          propChange={e => setName(e.target.value)}
+          placeholder=""
+        />
       </div>
       <br />
       <Button
         disabled={!name}
-        className="btn btn-success m-1"
+        className="btn btn-primary m-2"
         onClick={() => createModel()}
         text="Next"
       />

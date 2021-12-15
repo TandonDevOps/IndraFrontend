@@ -3,68 +3,53 @@ import axios from "axios";
 import config from 'IndraReactCommon/config';
 import PropTypes from 'prop-types';
 import Button from "./Button";
+import ModelInputField from "./ModelInputField";
 
-function GroupInput({ data, name, next }) {
+function GroupInput({ data, next }) {
   const [groupName, setGroupName] = useState("");
   const [groupColor, setGroupColor] = useState("");
   const [groupCount, setGroupCount] = useState(0);
   const [listOfGroups, setListOfGroups] = useState([]);
-  console.log(data, name, listOfGroups);
   return <>
     <h4>Model {data.env.name} is created. Now you need to create at least one group for your model</h4>
 
     <ul>
       {listOfGroups.map((o, i) => (
         <li key={o.name}>
-          {i}: name: {o.name}&nbsp;color: {o.color}&nbsp;count: {o.count}
+          {i + 1}: name: {o.name}&nbsp;color: {o.color}&nbsp;count: {o.count}
         </li>
       ))}
     </ul>
-    <div style={{
-      display: "flex",
-      justifyContent: "space-around"
-    }}>
+    <div>
       <div>
-        <span style={{
-          "min-width": "100px",
-          display: "inline-block"
-        }}>Group Name:</span>
-        <input
-          className="col-sm-4 col-md-4 col-lg-4"
-          style={{ width: 150 }}
-          value={groupName}
+        <ModelInputField
           type="text"
-          onChange={e => setGroupName(e.target.value)}
+          label="Group Name:"
+          name="input_name"
+          propChange={e => setGroupName(e.target.value)}
+          placeholder=""
         />
       </div>
       <div>
-        <span style={{
-          "min-width": "100px",
-          display: "inline-block"
-        }}>Group Color:</span>
-        <input
-          className="col-sm-4 col-md-4 col-lg-4"
-          style={{ width: 150 }}
+        <ModelInputField
           type="text"
-          value={groupColor}
-          onChange={e => setGroupColor(e.target.value)}
+          label="Group Color:"
+          name="input_color"
+          propChange={e => setGroupColor(e.target.value)}
+          placeholder=""
         />
       </div>
       <div>
-        <span style={{
-          "min-width": "100px",
-          display: "inline-block"
-        }}>Group Count:</span>
-        <input
-          className="col-sm-4 col-md-4 col-lg-4"
-          style={{ width: 150 }}
+        <ModelInputField
+          label="Group Count:"
+          name="input_count"
           type="INT"
-          value={groupCount}
-          onChange={e => setGroupCount(e.target.value)}
+          propChange={e => setGroupCount(e.target.value)}
+          placeholder=""
         />
       </div>
       <Button
-        className="btn btn-success m-1"
+        className="btn btn-primary m-2"
         onClick={() => {
           setListOfGroups(
             listOfGroups.concat({
@@ -73,15 +58,15 @@ function GroupInput({ data, name, next }) {
               count: groupCount
             })
           );
-          setGroupName("");
-          setGroupColor("");
-          setGroupCount(0);
+          document.getElementById("input_name").value = ""
+          document.getElementById("input_color").value = ""
+          document.getElementById("input_count").value = ""
         }}
         text="Add"
       />
     </div>
     <Button
-      className="btn btn-success m-1"
+      className="btn btn-primary m-2"
       onClick={() => {
         let res = Promise.resolve();
         listOfGroups.forEach(o => {
