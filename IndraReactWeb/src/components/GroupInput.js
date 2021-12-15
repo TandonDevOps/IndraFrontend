@@ -83,17 +83,17 @@ function GroupInput({ data, name, next }) {
     <Button
       className="btn btn-success m-1"
       onClick={() => {
-        listOfGroups.forEach(async o => {
-          await axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
-        });
-        setListOfGroups([]);
-        next();
-        // Promise.all(listOfGroups.map(o => (
-        //   axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`)
-        // ))).then(() => {
-        //   setListOfGroups([]);
-        //   next();
-        // })
+        let res = Promise.resolve();
+        listOfGroups.forEach(o => {
+          res = res.then(() => axios.post(`${config.GENERATOR_CREATE_GROUP}${data && data.exec_key}?group_name=${o.name}&group_color=${o.color}&group_number_of_members=${o.count}`))
+            .catch(() => {
+              window.alert(`Failed to add group ${o.name}!`)
+            });
+        })
+        res.then(() => {
+          setListOfGroups([]);
+          next();
+        })
       }}
       text="Save & Continue"
     />
